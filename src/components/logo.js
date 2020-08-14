@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Logo = ({ text }) => {
+import { siteShortTitle } from '../config/index';
+
+const Logo = () => {
     return (
-        <h1 className="text-3xl font-bold uppercase">{text}</h1>
+        <h1 className="text-3xl font-bold uppercase">{siteShortTitle}</h1>
     );
 };
 

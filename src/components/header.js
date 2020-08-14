@@ -4,7 +4,7 @@ import { Link } from 'gatsby';
 import Logo from '../components/logo';
 import Icon from '../components/icons/index';
 
-import { navLinks, siteShortTitle } from '../config';
+import { navLinks } from '../config';
 
 const Header = () => {
 
@@ -13,7 +13,9 @@ const Header = () => {
     return (
         <header className="flex items-center justify-between">
 
-            <Logo text={siteShortTitle} />
+            <Link to="/">
+                <Logo />
+            </Link>
             <nav className="flex items-center">
                 {menu.map(({ name, url }, key) => {
                     return (
@@ -23,7 +25,7 @@ const Header = () => {
                     )
                 })}
                 <button className="hover:bg-gray-400 bg-gray-200 rounded w-8 h-8 p-1">
-                    <Icon name="linkedin" />
+                    <Icon name="moon" />
                 </button>
             </nav>
 

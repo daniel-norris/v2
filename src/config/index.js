@@ -10,6 +10,10 @@ module.exports = {
 
     socialMedia: [
         {
+            name: "Twitter",
+            url: "https://twitter.com/danielpnorris",
+        },
+        {
             name: "LinkedIn",
             url: "https://www.linkedin.com/in/danielpnorris/",
         },
@@ -18,16 +22,12 @@ module.exports = {
             url: "https://medium.com/@dan.norris",
         },
         {
-            name: "Twitter",
-            url: "https://twitter.com/danielpnorris",
+            name: "GitHub",
+            url: "https://github.com/daniel-norris",
         },
         {
             name: "Dev",
             url: "https://dev.to/danielnorris",
-        },
-        {
-            name: "GitHub",
-            url: "https://github.com/daniel-norris",
         },
     ],
 
