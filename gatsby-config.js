@@ -3,8 +3,9 @@ const config = require('./src/config/index');
 module.exports = {
 
     siteMetadata: {
-        title: config.title,
-        description: config.description,
+        title: config.siteTitle,
+        description: config.siteDescription,
+        author: config.author,
     },
     plugins: [
         `gatsby-plugin-postcss`,

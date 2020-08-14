@@ -14,7 +14,7 @@ const Footer = () => {
             <div className="flex w-1/4 justify-between">
                 {socialMedia.map(({ name, url }, key) => {
                     return (
-                        <a className="w-6 h-6" href={url} alt={`${name} icon`}>
+                        <a className="w-6 h-6" href={url} key={key} alt={`${name} icon`}>
                             <Icon name={name} />
                         </a>
                     )

@@ -4,12 +4,29 @@ import { graphql } from 'gatsby';
 
 import Hero from '../components/sections/hero';
 
-const Home = () => {
+const Home = ({ data }) => {
     return (
         <Layout>
-            <Hero />
+            <Hero content={data.hero.edges} />
         </Layout>
     );
 };
 
 export default Home;
+
+
+export const pageQuery = graphql`
+{
+  hero: allMdx(filter: {fileAbsolutePath: {regex: "/hero/"}}) {
+    edges {
+      node {
+        body
+        frontmatter {
+          intro
+          title
+        }
+      }
+    }
+  }
+}
+`
