@@ -4,7 +4,9 @@ import { siteShortTitle } from '../config/index';
 
 const Logo = () => {
     return (
-        <h1 className="text-3xl font-bold uppercase">{siteShortTitle}</h1>
+        <div className="bg-blue-500 rounded text-white px-1 py-0">
+            <h1 className="text-3xl font-bold uppercase">{siteShortTitle}</h1>
+        </div>
     );
 };
 

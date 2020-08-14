@@ -10,8 +10,8 @@ const Hero = ({ content }) => {
     const { button } = navLinks;
 
     return (
-        <section className="mt-6 h-screen">
-            <p className="uppercase font-bold text-lg">
+        <section className="mt-6 min-h-full">
+            <p className="uppercase font-bold text-lg text-blue-500">
                 {frontmatter.intro}
             </p>
             <h1 className="font-bold text-6xl">
