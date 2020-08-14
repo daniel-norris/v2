@@ -10,7 +10,7 @@ const Hero = ({ content }) => {
     const { button } = navLinks;
 
     return (
-        <section>
+        <section className="mt-6 h-screen">
             <p className="uppercase font-bold text-lg">
                 {frontmatter.intro}
             </p>
@@ -20,7 +20,7 @@ const Hero = ({ content }) => {
             <MDXRenderer>{body}</MDXRenderer>
 
             <Link to={button.url}>
-                <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
+                <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded mt-6">
                     {button.name}
                 </button>
             </Link>
