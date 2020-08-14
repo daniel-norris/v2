@@ -23,7 +23,7 @@ const Header = () => {
                     )
                 })}
                 <button className="hover:bg-gray-400 bg-gray-200 rounded w-8 h-8 p-1">
-                    <Icon name="moon" />
+                    <Icon name="linkedin" />
                 </button>
             </nav>
 
