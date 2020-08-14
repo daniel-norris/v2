@@ -10,5 +10,15 @@ module.exports = {
         title: "Dan Norris",
         description: "v2 personal portfolio. Dan is based in Bristol, UK and is a Software Engineer for LexisNexis",
     },
-    plugins: [`gatsby-plugin-postcss`],
+    plugins: [
+        `gatsby-plugin-postcss`,
+        `gatsby-plugin-mdx`,
+        {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                name: `content`,
+                path: `${__dirname}/src/content`,
+            },
+        },
+    ],
 }
