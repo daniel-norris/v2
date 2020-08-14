@@ -5,7 +5,7 @@ import Header from '../components/header';
 
 const Layout = ({ children }) => {
     return (
-        <div className="mx-auto container w-full min-h-full">
+        <div className="mx-auto container w-full min-h-full mt-6">
             <Header />
             <main>{children}</main>
             <footer className="bg-gray-300">
