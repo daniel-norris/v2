@@ -8,10 +8,10 @@ import { socialMedia } from '../config/index';
 const Footer = () => {
     return (
         <footer className="flex items-center justify-between">
-            <Link to="/" >
+            <Link to="/" aria-label="home">
                 <Logo />
             </Link>
-            <div className="flex">
+            <div className="flex w-1/4 justify-between">
                 {socialMedia.map(({ name, url }, key) => {
                     return (
                         <a className="w-6 h-6" href={url} alt={`${name} icon`}>

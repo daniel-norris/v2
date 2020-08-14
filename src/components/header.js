@@ -13,7 +13,7 @@ const Header = () => {
     return (
         <header className="flex items-center justify-between">
 
-            <Link to="/">
+            <Link to="/" aria-label="home">
                 <Logo />
             </Link>
             <nav className="flex items-center">
