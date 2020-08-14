@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Header from '../components/header';
+
 const Layout = ({ children }) => {
     return (
-        <>
-            <header>
-                header
-            </header>
+        <div className="mx-auto container w-full min-h-full">
+            <Header />
             <main>{children}</main>
-            <footer>
+            <footer className="bg-gray-300">
                 footer
             </footer>
-        </>
+        </div>
     );
 };
 
