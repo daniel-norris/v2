@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 
 import Logo from '../components/logo';
 
-import { navLinks } from '../config';
+import { navLinks, siteShortTitle } from '../config';
 
 const Header = () => {
 
@@ -16,7 +16,7 @@ const Header = () => {
             <nav>
                 {menu.map(({ name, url }, key) => {
                     return (
-                        <Link className="text-sm ml-4" key={key} to={url}>
+                        <Link className="text-sm font-bold ml-8" key={key} to={url}>
                             {name}
                         </Link>
                     )
