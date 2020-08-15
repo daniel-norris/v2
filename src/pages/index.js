@@ -7,6 +7,7 @@ import About from '../components/sections/about';
 import Technology from "../components/sections/technology";
 import Testimonial from "../components/sections/testimonial";
 import Project from "../components/sections/project";
+import Articles from "../components/sections/articles";
 
 const Home = ({ data }) => {
     return (
@@ -16,6 +17,7 @@ const Home = ({ data }) => {
             <Technology content={data.technology.edges} />
             <Testimonial />
             <Project content={data.project.edges} />
+            <Articles content={data.articles.edges} />
         </Layout>
     );
 };
@@ -81,6 +83,23 @@ export const pageQuery = graphql`
             }
           }
         }
+      }
+    }
+  }
+  articles: allMdx(filter: {fileAbsolutePath: {regex: "/posts/"}}, sort: {order: DESC, fields: frontmatter___date}) {
+    edges {
+      node {
+        fields {
+          slug
+        }
+        frontmatter {
+          date(formatString: "Do MMM")
+          title
+        }
+        excerpt(pruneLength: 50)
+        id
+        body
+        timeToRead
       }
     }
   }
