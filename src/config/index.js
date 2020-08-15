@@ -31,6 +31,56 @@ module.exports = {
         },
     ],
 
+    technology: [
+        {
+            name: "aws"
+        },
+        {
+            name: "css3"
+        },
+        {
+            name: "gatsby"
+        },
+        {
+            name: "gulp"
+        },
+        {
+            name: "html5"
+        },
+        {
+            name: "javascript"
+        },
+        {
+            name: "jest"
+        },
+        {
+            name: "laravel"
+        },
+        {
+            name: "linux"
+        },
+        {
+            name: "node"
+        },
+        {
+            name: "php"
+        },
+        {
+            name: "react"
+        },
+        {
+            name: "redux"
+        },
+        {
+            name: "sass"
+        },
+        {
+            name: "tailwind"
+        },
+        {
+            name: "vue"
+        },
+    ],
     navLinks: {
         menu: [
             {
