@@ -6,22 +6,22 @@ import IconLinkedin from './linkedin';
 import IconMedium from './medium';
 import IconDev from './dev';
 import IconTwitter from './twitter';
-import IconAws from './aws';
-import IconCss3 from './css3';
-import IconGatsby from './gatsby';
-import IconGulp from './gulp';
-import IconHtml5 from './html5';
-import IconJavascript from './javascript';
-import IconJest from './jest';
-import IconLaravel from './laravel';
-import IconLinux from './linux';
-import IconNode from './node';
-import IconPhp from './php';
-import IconReact from './react';
-import IconRedux from './redux';
-import IconSass from './sass';
-import IconTailwind from './tailwind';
-import IconVue from './vue';
+import IconAws from './tech/aws';
+import IconCss3 from './tech/css3';
+import IconGatsby from './tech/gatsby';
+import IconGulp from './tech/gulp';
+import IconHtml5 from './tech/html5';
+import IconJavascript from './tech/javascript';
+import IconJest from './tech/jest';
+import IconLaravel from './tech/laravel';
+import IconLinux from './tech/linux';
+import IconNode from './tech/node';
+import IconPhp from './tech/php';
+import IconReact from './tech/react';
+import IconRedux from './tech/redux';
+import IconSass from './tech/sass';
+import IconTailwind from './tech/tailwind';
+import IconVue from './tech/vue';
 
 const Icon = ({ name, color }) => {
     switch (name.toLowerCase()) {
