@@ -1,10 +1,12 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
+import Dump from '../components/dump';
 
 const Blog = ({ data }) => {
     return (
         <Layout>
+            <Dump data={data} />
             {data.allMdx.nodes.map(({ excerpt, frontmatter }) => {
                 return (
                     <>
