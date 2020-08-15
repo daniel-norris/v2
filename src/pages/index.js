@@ -13,7 +13,7 @@ const Home = ({ data }) => {
             <Hero content={data.hero.edges} />
             <About content={data.about.edges} />
             <Technology content={data.technology.edges} />
-            <Testimonial content={data.testimonial.edges} />
+            <Testimonial />
         </Layout>
     );
 };
@@ -55,23 +55,6 @@ export const pageQuery = graphql`
       node {
         frontmatter {
             title
-        }
-      }
-    }
-  }
-  testimonial: allMdx(filter: {fileAbsolutePath: {regex: "/testimonial/"}}) {
-    edges {
-      node {
-        frontmatter {
-          firstReferee
-          firstTestimonial
-          firstTitle
-          secondReferee
-          secondTestimonial
-          secondTitle
-          thirdReferee
-          thirdTestimonial
-          thirdTitle
         }
       }
     }

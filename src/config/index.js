@@ -109,4 +109,21 @@ module.exports = {
             url: "/#contact",
         },
     },
+    testimonials: [
+        {
+            quote: "...ability to communicate [his] ideas very well",
+            referee: "Adam Gardner",
+            title: "Software Engineer",
+        },
+        {
+            quote: "communicative, honest and pragmatic",
+            referee: "Richard Inman",
+            title: "CIO",
+        },
+        {
+            quote: "[his] programming skills were never in doubt.",
+            referee: "Richard Stibbard",
+            title: "Founder",
+        },
+    ],
 }
