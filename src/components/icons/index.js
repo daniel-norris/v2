@@ -25,6 +25,7 @@ import IconVue from './tech/vue';
 
 import IconArrowLeft from './arrow-left';
 import IconArrowRight from './arrow-right';
+import IconExternal from './external';
 
 const Icon = ({ name, color }) => {
     switch (name.toLowerCase()) {
@@ -76,6 +77,8 @@ const Icon = ({ name, color }) => {
             return <IconArrowLeft color={color} />
         case "arrow-right":
             return <IconArrowRight color={color} />
+        case "external":
+            return <IconExternal color={color} />
         default:
             return null
     }

@@ -18,7 +18,7 @@ const Project = ({ content }) => {
 
                 return (
                     <div className="py-8" key={frontmatter.position}>
-                        <div className="mt-8">
+                        <div className="text-xs font-bold mt-8 uppercase text-blue-500">
                             {frontmatter.category}
                         </div>
                         <h3 className="text-3xl font-bold mb-6">{frontmatter.title}</h3>
@@ -30,7 +30,7 @@ const Project = ({ content }) => {
                                         <Icon name="github" />
                                     </a>
                                     <a href={frontmatter.external} className="w-8 h-8">
-                                        <Icon name="github" />
+                                        <Icon name="external" />
                                     </a>
                                 </div>
                             </div>
