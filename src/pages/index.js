@@ -73,6 +73,13 @@ export const pageQuery = graphql`
           github
           external
           category
+          screenshot {
+            childImageSharp {
+              fluid {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
         }
       }
     }
