@@ -5,6 +5,7 @@ import Layout from '../components/layout';
 import Hero from '../components/sections/hero';
 import About from '../components/sections/about';
 import Technology from "../components/sections/technology";
+import Testimonial from "../components/sections/testimonial";
 
 const Home = ({ data }) => {
     return (
@@ -12,6 +13,7 @@ const Home = ({ data }) => {
             <Hero content={data.hero.edges} />
             <About content={data.about.edges} />
             <Technology content={data.technology.edges} />
+            <Testimonial content={data.testimonial.edges} />
         </Layout>
     );
 };
@@ -53,6 +55,23 @@ export const pageQuery = graphql`
       node {
         frontmatter {
             title
+        }
+      }
+    }
+  }
+  testimonial: allMdx(filter: {fileAbsolutePath: {regex: "/testimonial/"}}) {
+    edges {
+      node {
+        frontmatter {
+          firstReferee
+          firstTestimonial
+          firstTitle
+          secondReferee
+          secondTestimonial
+          secondTitle
+          thirdReferee
+          thirdTestimonial
+          thirdTitle
         }
       }
     }

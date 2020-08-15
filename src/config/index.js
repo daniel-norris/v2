@@ -33,16 +33,7 @@ module.exports = {
 
     technology: [
         {
-            name: "aws"
-        },
-        {
             name: "css3"
-        },
-        {
-            name: "gatsby"
-        },
-        {
-            name: "gulp"
         },
         {
             name: "html5"
@@ -51,19 +42,10 @@ module.exports = {
             name: "javascript"
         },
         {
-            name: "jest"
+            name: "sass"
         },
         {
-            name: "laravel"
-        },
-        {
-            name: "linux"
-        },
-        {
-            name: "node"
-        },
-        {
-            name: "php"
+            name: "tailwind"
         },
         {
             name: "react"
@@ -72,13 +54,31 @@ module.exports = {
             name: "redux"
         },
         {
-            name: "sass"
-        },
-        {
-            name: "tailwind"
-        },
-        {
             name: "vue"
+        },
+        {
+            name: "node"
+        },
+        {
+            name: "gatsby"
+        },
+        {
+            name: "laravel"
+        },
+        {
+            name: "php"
+        },
+        {
+            name: "gulp"
+        },
+        {
+            name: "jest"
+        },
+        {
+            name: "linux"
+        },
+        {
+            name: "aws"
         },
     ],
     navLinks: {

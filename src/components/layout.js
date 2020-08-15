@@ -6,7 +6,7 @@ import Footer from '../components/footer';
 
 const Layout = ({ children }) => {
     return (
-        <div className="mx-auto container w-3/5 mt-6">
+        <div className="mx-auto container w-3/5 mt-6" style={{ overflow: "hidden" }}>
             <Header />
             <main>{children}</main>
             <Footer />

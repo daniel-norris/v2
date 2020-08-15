@@ -23,6 +23,9 @@ import IconSass from './tech/sass';
 import IconTailwind from './tech/tailwind';
 import IconVue from './tech/vue';
 
+import IconArrowLeft from './arrow-left';
+import IconArrowRight from './arrow-right';
+
 const Icon = ({ name, color }) => {
     switch (name.toLowerCase()) {
         case "moon":
@@ -69,6 +72,10 @@ const Icon = ({ name, color }) => {
             return <IconTailwind color={color} />
         case "vue":
             return <IconVue color={color} />
+        case "arrow-left":
+            return <IconArrowLeft color={color} />
+        case "arrow-right":
+            return <IconArrowRight color={color} />
         default:
             return null
     }
