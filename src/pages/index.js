@@ -6,6 +6,7 @@ import Hero from '../components/sections/hero';
 import About from '../components/sections/about';
 import Technology from "../components/sections/technology";
 import Testimonial from "../components/sections/testimonial";
+import Project from "../components/sections/project";
 
 const Home = ({ data }) => {
     return (
@@ -14,6 +15,7 @@ const Home = ({ data }) => {
             <About content={data.about.edges} />
             <Technology content={data.technology.edges} />
             <Testimonial />
+            <Project />
         </Layout>
     );
 };

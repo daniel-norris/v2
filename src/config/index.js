@@ -89,11 +89,11 @@ module.exports = {
             },
             {
                 name: "Work",
-                url: "/#work",
+                url: "/#project",
             },
             {
                 name: "Testimonials",
-                url: "/#testimonials",
+                url: "/#testimonial",
             },
             {
                 name: "Blog",
