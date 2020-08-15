@@ -7,6 +7,7 @@ module.exports = {
     siteUrl: "",
     siteLanguage: "en_UK",
     siteIcon: "",
+    github: "https://github.com/daniel-norris",
 
     socialMedia: [
         {

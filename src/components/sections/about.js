@@ -9,7 +9,7 @@ const About = ({ content }) => {
 
     return (
         <section id="about" className="mt-6 flex-col" style={{ height: "60vh" }}>
-            <h3 className="text-3xl font-bold mb-6">{frontmatter.title}</h3>
+            <h3 className="text-5xl font-bold mb-6">{frontmatter.title}</h3>
             <div className=" font-light text-lg flex justify-between">
                 <div className="w-1/2">
                     <MDXRenderer>{body}</MDXRenderer>

@@ -3,22 +3,28 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Icon from '../../components/icons/index';
 import Img from "gatsby-image";
 
+import { github } from '../../config/index';
+
 const Project = ({ content }) => {
 
     // const sectionDetails = content[3].node;
     const projects = content.slice(1, content.length);
 
-    console.log(projects);
-
     return (
         <section id="project" className="mt-6 flex-col mb-8">
+            <div className="pb-8">
+                <h1 className="text-5xl font-bold">Projects</h1>
+                <a href={github} class="hover:underline">view all projects</a>
+            </div>
 
             {projects.map((project, key) => {
 
                 const { body, frontmatter } = project.node;
 
                 return (
-                    <div className="py-8 flex" key={frontmatter.position}>
+
+                    <div className={`py-8 ${frontmatter.position % 2 !== 0 ? "flex" : "flex flex-row-reverse"}`} key={frontmatter.position}>
+
                         <div className="w-1/3">
                             <div className="text-xs font-bold uppercase text-blue-500">
                                 {frontmatter.category}
@@ -56,6 +62,7 @@ const Project = ({ content }) => {
                 )
             })}
         </section >
+
     );
 };
 
