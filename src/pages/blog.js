@@ -1,19 +1,22 @@
 import React from 'react';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import Layout from '../components/layout';
 import Dump from '../components/dump';
+
 
 const Blog = ({ data }) => {
     return (
         <Layout>
             <Dump data={data} />
-            {data.allMdx.nodes.map(({ excerpt, frontmatter }) => {
+            {data.allMdx.nodes.map(({ excerpt, frontmatter, id, fields }) => {
                 return (
-                    <>
-                        <h1>{frontmatter.title}</h1>
-                        <p>{frontmatter.date}</p>
-                        <p>{excerpt}</p>
-                    </>
+                    <div key={id}>
+                        <Link to={fields.slug}>
+                            <h1>{frontmatter.title}</h1>
+                            <p>{frontmatter.date}</p>
+                            <p>{excerpt}</p>
+                        </Link>
+                    </div>
                 )
             })}
         </Layout>
@@ -32,6 +35,9 @@ export const query = graphql`
         }
         id
         excerpt(pruneLength: 30)
+        fields {
+            slug
+        }
       }
     }
 }`
