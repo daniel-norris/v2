@@ -61,7 +61,7 @@ export const pageQuery = graphql`
       }
     }
   }
-  project: allMdx(filter: {fileAbsolutePath: {regex: "/project/"}})   {
+  project: allMdx(filter: {fileAbsolutePath: {regex: "/project/"}, frontmatter: {visible: {eq: "true"}}}, sort: {fields: [frontmatter___position], order: ASC}) {
     edges {
       node {
         body
@@ -70,11 +70,9 @@ export const pageQuery = graphql`
           visible
           tags
           position
-          intro
           github
           external
           category
-
         }
       }
     }
