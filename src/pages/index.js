@@ -15,7 +15,7 @@ const Home = ({ data }) => {
             <About content={data.about.edges} />
             <Technology content={data.technology.edges} />
             <Testimonial />
-            <Project />
+            <Project content={data.project.edges} />
         </Layout>
     );
 };
@@ -57,6 +57,24 @@ export const pageQuery = graphql`
       node {
         frontmatter {
             title
+        }
+      }
+    }
+  }
+  project: allMdx(filter: {fileAbsolutePath: {regex: "/project/"}})   {
+    edges {
+      node {
+        body
+        frontmatter {
+          title
+          visible
+          tags
+          position
+          intro
+          github
+          external
+          category
+
         }
       }
     }

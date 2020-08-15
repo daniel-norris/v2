@@ -4,8 +4,6 @@ import Icon from '../../components/icons/index';
 
 const Technology = ({ content }) => {
 
-    console.log(technology);
-
     const { frontmatter } = content[0].node;
 
     return (

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Quote from '../../components/quote';
+import React, { useState } from 'react';
 import Icon from '../../components/icons/index';
 
 import { testimonials } from '../../config/index';
