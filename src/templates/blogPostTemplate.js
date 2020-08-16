@@ -14,13 +14,13 @@ export default ({ data }) => {
         <MDXProvider
             components={{
                 p: props => <p {...props} className="text-sm font-light mb-4" />,
-                h1: props => <p {...props} className="text-2xl font-bold mb-8" />,
-                h2: props => <p {...props} className="text-xl font-bold mb-8" />,
-                h3: props => <p {...props} className="text-lg font-bold mb-8" />,
-                strong: props => <p {...props} className="font-bold" style={{ display: "inline" }} />,
-                a: props => <p {...props} className="font-bold text-blue-500 hover:underline cursor-pointer" style={{ display: "inline" }} />,
-                ul: props => <p {...props} className="list-disc text-sm font-light ml-4 mb-4" />,
-                blockquote: props => <p {...props} role="alert" className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 ml-4 mb-4" />,
+                h1: props => <h1 {...props} className="text-2xl font-bold mb-8" />,
+                h2: props => <h2 {...props} className="text-xl font-bold mb-8" />,
+                h3: props => <h3 {...props} className="text-lg font-bold mb-8" />,
+                strong: props => <strong {...props} className="font-bold" style={{ display: "inline" }} />,
+                a: props => <a {...props} className="font-bold text-blue-500 hover:underline cursor-pointer" style={{ display: "inline" }} />,
+                ul: props => <ul {...props} className="list-disc text-sm font-light ml-4 mb-4" />,
+                blockquote: props => <div {...props} role="alert" className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 ml-4 mb-4" />,
             }}
         >
             <Layout>
@@ -34,7 +34,7 @@ export default ({ data }) => {
                         <div className="my-8 shadow-md">
                             <Img
                                 style={{ height: "30vh" }}
-                                sizes={frontmatter.cover.childImageSharp.sizes}
+                                fluid={frontmatter.cover.childImageSharp.fluid}
                             />
                         </div>
 
@@ -59,8 +59,8 @@ export const query = graphql`
         cover {
             publicURL
             childImageSharp {
-              sizes(maxWidth: 2000, traceSVG: { color: "#4299E1" }) {
-                ...GatsbyImageSharpSizes_tracedSVG
+              fluid(maxWidth: 2000, traceSVG: { color: "#4299E1" }) {
+                ...GatsbyImageSharpFluid_tracedSVG
               }
             }
           }
