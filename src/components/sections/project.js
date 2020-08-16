@@ -41,6 +41,11 @@ const Project = ({ content }) => {
                                         })}
                                     </div>
                                     <div className="flex mt-4">
+                                        {frontmatter.npm ?
+                                            <a href={frontmatter.npm} className="w-8 h-8 mr-4">
+                                                <Icon name="npm" color="gray" />
+                                            </a>
+                                            : null}
                                         <a href={frontmatter.github} className="w-8 h-8 mr-4">
                                             <Icon name="github" color="gray" />
                                         </a>

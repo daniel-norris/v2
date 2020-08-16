@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Icon from '../../components/icons/index';
+import { motion } from 'framer-motion';
 
 import { testimonials } from '../../config/index';
 
@@ -20,7 +21,9 @@ const Testimonial = () => {
             </div>
 
             <div className="flex mt-6 ml-8 justify-center">
-                <button
+                <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     className="mr-4"
                     onClick={() => setReference(reference > 0 ? reference - 1 : reference)}>
                     <Icon
@@ -28,14 +31,16 @@ const Testimonial = () => {
                         color="#4299e1"
                         className="mr-4"
                     />
-                </button>
-                <button
+                </motion.button>
+                <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     onClick={() => setReference(reference < 2 ? reference + 1 : reference)}>
                     <Icon
                         name="arrow-right"
                         color="#4299e1"
                     />
-                </button>
+                </motion.button>
             </div>
         </section >
     );
