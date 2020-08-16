@@ -9,8 +9,10 @@ const Hero = ({ content }) => {
     const { frontmatter, body } = content[0].node;
     const { button } = navLinks;
 
+
+
     return (
-        <section style={{ height: "60vh", marginTop: "12rem" }}>
+        <section class="flex flex-col justify-center" style={{ height: "100vh" }}>
             <p className="uppercase font-bold text-lg text-blue-500">
                 {frontmatter.intro}
             </p>
@@ -26,6 +28,7 @@ const Hero = ({ content }) => {
                     {button.name}
                 </button>
             </Link>
+
         </section>
 
     );

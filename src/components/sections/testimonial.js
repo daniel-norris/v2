@@ -8,7 +8,7 @@ const Testimonial = () => {
     const [reference, setReference] = useState(0);
 
     return (
-        <section id="testimonial" className="mt-6 flex-col" style={{ height: "60vh" }}>
+        <section id="testimonial" className="mt-6 flex flex-col justify-center" style={{ height: "60vh" }}>
             {/* https://medium.com/modex/css-tricks-expanding-beyond-a-parent-div-10d7b7204c21 */}
             <div className="flex justify-center ">
                 <div>

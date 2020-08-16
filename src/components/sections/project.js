@@ -11,7 +11,7 @@ const Project = ({ content }) => {
     const projects = content.slice(1, content.length);
 
     return (
-        <section id="project" className="mt-6 flex-col mb-8">
+        <section id="project" className="mt-6 flex flex-col mb-8">
             <div className="pb-8">
                 <h1 className="text-5xl font-bold">Projects</h1>
                 <a href={github} class="hover:underline">view all projects</a>

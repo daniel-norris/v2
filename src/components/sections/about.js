@@ -14,7 +14,7 @@ const About = ({ content }) => {
                 <div className="w-1/2">
                     <MDXRenderer>{body}</MDXRenderer>
                 </div>
-                <div className="w-1/4">
+                <div className="w-2/6">
                     <Img fluid={frontmatter.image.childImageSharp.fluid} />
                 </div>
             </div>
