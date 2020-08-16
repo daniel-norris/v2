@@ -14,7 +14,7 @@ const Technology = ({ content }) => {
                 {technology.map(({ name }, key) => {
                     return (
                         <motion.div
-                            whileHover={{ scale: 1.1, fill: "#4299E1" }}
+                            whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             className="w-20 p-4">
                             <Icon name={name} key={key} />

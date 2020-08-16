@@ -2,6 +2,7 @@ import React from 'react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Icon from '../../components/icons/index';
 import Img from "gatsby-image";
+import { motion } from 'framer-motion';
 
 import { github } from '../../config/index';
 
@@ -42,16 +43,27 @@ const Project = ({ content }) => {
                                     </div>
                                     <div className="flex mt-4">
                                         {frontmatter.npm ?
-                                            <a href={frontmatter.npm} className="w-8 h-8 mr-4">
+                                            <motion.a
+                                                whileHover={{ scale: 1.1 }}
+                                                whileTap={{ scale: 0.9 }}
+                                                href={frontmatter.npm} className="w-8 h-8 mr-4">
                                                 <Icon name="npm" color="gray" />
-                                            </a>
+                                            </motion.a>
                                             : null}
-                                        <a href={frontmatter.github} className="w-8 h-8 mr-4">
+                                        <motion.a
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.9 }}
+                                            href={frontmatter.github}
+                                            className="w-8 h-8 mr-4">
                                             <Icon name="github" color="gray" />
-                                        </a>
-                                        <a href={frontmatter.external} className="w-8 h-8">
+                                        </motion.a>
+                                        <motion.a
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.9 }}
+                                            href={frontmatter.external}
+                                            className="w-8 h-8">
                                             <Icon name="external" color="gray" />
-                                        </a>
+                                        </motion.a>
                                     </div>
                                 </div>
 
