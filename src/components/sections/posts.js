@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
-const Articles = ({ content }) => {
+const Posts = ({ content }) => {
 
     return (
 
         <section id="blog" className="mt-6 flex-col">
-            <h3 className="text-5xl font-bold mb-6">Featured Posts</h3>
+            <h3 className="text-5xl font-bold mb-6">All Posts</h3>
 
 
-            {content.map((article, key) => {
+            {content.map((posts, key) => {
 
-                const { excerpt, id, body, frontmatter, timeToRead, fields } = article.node;
+                const { excerpt, id, body, frontmatter, timeToRead, fields } = posts.node;
 
                 return (
                     <Link to={fields.slug}>
@@ -26,13 +26,8 @@ const Articles = ({ content }) => {
                     </Link>
                 )
             })}
-            <Link to="/blog" className="flex justify-center">
-                <button className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded mt-6">
-                    See More
-                </button>
-            </Link>
         </section>
     )
 }
 
-export default Articles;
+export default Posts;
