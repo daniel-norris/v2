@@ -8,8 +8,9 @@ I’ve been working through a lot of basic JavaScript algorithms - some of which
 
 I need to come back to this as it’s helped to identify weaknesses I have around my ability to refactor using different approaches, e.g. recursion, reduce, map, etc.
 
-Reverse a string
+## Reverse a string
 
+```js
 function  reverseString(str) {
 	let  newArr = str.split("");
 	console.log(newArr);
@@ -23,11 +24,16 @@ return  revArr.join("");
 }
 
 reverseString("hello");
-Factorialise a number
-Using recusion here. This can be rewritten a number of different ways, e.g. tail recursion, for statement and reduce().
+```
 
-Explanation on recursion here.
 
+## Factorialise a number
+
+Using recusion here. This can be rewritten a number of different ways, e.g. **tail recursion**, for statement and `reduce()`.
+
+Explanation on recursion [here](https://www.youtube.com/watch?v=k7-N8R0-KY4).
+
+```js
 function factorialize(num) {
 	if (num === 0) {
 		return 1;
@@ -36,8 +42,11 @@ function factorialize(num) {
 }
 
 factorialize(5);
-Same problem using tail recusion. I think my brain exceeded its maximum call stack size trying to understand this.
+```
 
+Same problem using **tail recusion**. I think my brain exceeded its maximum call stack size trying to understand this.
+
+```js
 function factorialize(num, factorial = 1) {
 	if (num == 0) {
 		return factorial;
@@ -47,8 +56,11 @@ function factorialize(num, factorial = 1) {
 }
 
 factorialize(5);
-Check typeof() value
+```
 
+Check `typeof()` value
+
+```js
 function  booWho(bool) {
 	if (typeof(bool) === "boolean") {
 		return  true;
@@ -57,11 +69,14 @@ function  booWho(bool) {
 	}
 }
 booWho(null);
-Converting string to sentence case
-Again, rewritten a number of different ways. Originally tried a regex pattern with replace() but couldn’t figure out how to get the callback function to return the right value.
+```
 
-This solution uses map(), split() and replace().
+## Converting string to sentence case
+Again, rewritten a number of different ways. Originally tried a regex pattern with `replace()` but couldn’t figure out how to get the callback function to return the right value.
 
+This solution uses `map()`, `split()` and `replace()`.
+
+```js
 function  titleCase(str) {
 	let  newArray = str.toLowerCase().split(" ");
 	// console.log(newArray);
@@ -75,16 +90,22 @@ function  titleCase(str) {
 titleCase("I'm a little tea pot");
 
 // returns "I'm A Little Tea Pot
-Edit: found a solution using a regex pattern, which looks a lot easier.
+```
 
+**Edit:** found a solution using a **regex pattern**, which looks a lot easier.
+
+```js
 function titleCase(str) {
 	return str.toLowerCase().replace(/(^|\s)\S/g, L => L.toUpperCase());
 }
-Copying array into other array (in order)
-Using splice here and the spread ... operator. Looks like you could iterate here and use slice to copy the array but using ... was just faster and cleaner.
+```
 
-The n argument indicates the indice you want to start inputting arr1 into arr2.
+## Copying array into other array (in order)
+Using `splice` here and the spread `...` operator. Looks like you could iterate here and use `slice` to copy the array but using `...` was just faster and cleaner.
 
+The `n` argument indicates the indice you want to start inputting `arr1` into `arr2`.
+
+```js
 function frankenSplice(arr1, arr2, n) {
 
 	/*
@@ -106,11 +127,14 @@ function frankenSplice(arr1, arr2, n) {
 }
 frankenSplice([1, 2, 3], [4, 5, 6], 1);
 // result returns [4, 1, 2, 3, 5, 6]
-Removing falsy values from an array
-Pretty straightforward exercise which removes false bool values from an array, then uses filter() to remove them.
+```
 
-You could probably use a switch statement here with fall through instead of the if statement and map() instead of filter() to potentially remove the values (?).
+## Removing falsy values from an array
+Pretty straightforward exercise which removes false bool values from an array, then uses `filter()` to remove them.
 
+You could probably use a `switch` statement here with **fall through** instead of the `if` statement and `map()` instead of `filter()` to potentially remove the values (?).
+
+```js
 function  bouncer(arr) {
 	for (let  i = 0; i < arr.length; i++) {
 	if (arr[i] === false |
@@ -133,9 +157,13 @@ return  result;
 bouncer([7, "ate", "", false, 9]);
 
 // result returns [7, "ate", 9]
-Sorting array of numbers ascending (and finding indice)
-Tried solving this with a loop but then later realised there is a method for this called sort(). You can then later find the index using either findIndex() or indexOf().
+```
 
+## Sorting array of numbers ascending (and finding indice)
+
+Tried solving this with a loop but then later realised there is a method for this called `sort()`. You can then later find the index using either `findIndex()` or `indexOf()`.
+
+```js
 function  getIndexToIns(arr, num) {
 	arr.push(num);
 	arr.sort(function(a, b) {
@@ -148,9 +176,12 @@ function  getIndexToIns(arr, num) {
 }
 
 getIndexToIns([40, 60], 50);
-Check that all letters in array match other array
-Using split(), every() and toLowerCase() here to firstly split the second element into characters, lowercase to make it easier to evaluate and then using every() to compare against the letters in the first element.
+```
 
+## Check that all letters in array match other array
+Using `split()`, `every()` and `toLowerCase()` here to firstly split the second element into characters, lowercase to make it easier to evaluate and then using `every()` to compare against the letters in the first element.
+
+```js
 function  mutation(arr) {
 	return  arr[1]
 		.toLowerCase()
@@ -162,11 +193,14 @@ function  mutation(arr) {
 
 mutation(["hello", "hey"]);
 // returns false
-Split array into n groups
-This splits the original array into a multi-dimensional array split into n number of groups.
+```
 
-Don’t forget the second parameter for slice() is an index compared to splice() which is the number of elements removed. slice() will also just extract to the end of the sequence if second para. is greater than length array.
+## Split array into n groups
+This splits the original array into a multi-dimensional array split into `n` number of groups.
 
+Don’t forget the second parameter for `slice()` is an index compared to `splice()` which is the number of elements removed. `slice()` will also just extract to the end of the sequence if second para. is greater than length array.
+
+```js
 function  chunkArrayInGroups(arr, size) {
 
 	let  newArray = [];
@@ -178,3 +212,4 @@ function  chunkArrayInGroups(arr, size) {
 
 chunkArrayInGroups(["a", "b", "c", "d"], 2);
 // returns [["a", "b"], ["c", "d"]]
+```
