@@ -3,6 +3,14 @@ import theme from 'prism-react-renderer/themes/nightOwl'
 import React from 'react'
 import { copyToClipboard } from '../utils/copyClipboard';
 
+// revisit this
+import {
+    LiveEditor,
+    LiveError,
+    LivePreview,
+    LiveProvider,
+} from 'react-live'
+
 const lineNo = (i) => {
     return (
         <span style={{
@@ -32,7 +40,18 @@ const copyCode = (handleClick) => {
     );
 };
 
-const Code = ({ codeString, language }) => {
+export const Code = ({ codeString, language, ...props }) => {
+
+    // revisit this
+    if (props['react-live']) {
+        return (
+            <LiveProvider code={codeString} noInline={true} theme={theme}>
+                <LiveEditor />
+                <LiveError />
+                <LivePreview />
+            </LiveProvider>
+        )
+    }
 
     const handleClick = () => {
         copyToClipboard(codeString);
