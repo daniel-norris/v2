@@ -1,6 +1,7 @@
 import React from 'react';
 import { technology } from '../../config/index';
 import Icon from '../../components/icons/index';
+import { motion } from 'framer-motion';
 
 const Technology = ({ content }) => {
 
@@ -12,9 +13,12 @@ const Technology = ({ content }) => {
             <div className="w-full h-full flex flex-wrap">
                 {technology.map(({ name }, key) => {
                     return (
-                        <div className="w-20 p-4">
+                        <motion.div
+                            whileHover={{ scale: 1.1, fill: "#4299E1" }}
+                            whileTap={{ scale: 0.9 }}
+                            className="w-20 p-4">
                             <Icon name={name} key={key} />
-                        </div>
+                        </motion.div>
                     )
                 })}
             </div>
