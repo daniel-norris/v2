@@ -7,7 +7,7 @@ import { socialMedia } from '../config/index';
 
 const Footer = () => {
     return (
-        <footer className="flex items-center justify-between py-8">
+        <footer className="flex items-center justify-between py-8 border-t-2 border-gray-200 mt-6">
             <Link to="/" aria-label="home">
                 <Logo />
             </Link>

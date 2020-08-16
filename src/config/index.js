@@ -1,12 +1,13 @@
 module.exports = {
 
-    author: "@dannorris",
+    author: "Dan Norris",
     siteTitle: "Personal Portfolio",
     siteShortTitle: "DN",
     siteDescription: "v2 personal portfolio. Dan is based in Bristol, UK and a Software Engineer for LexisNexis",
     siteUrl: "",
     siteLanguage: "en_UK",
     siteIcon: "",
+    github: "https://github.com/daniel-norris",
 
     socialMedia: [
         {
