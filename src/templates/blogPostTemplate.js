@@ -20,7 +20,6 @@ export default ({ data }) => {
                 a: props => <p {...props} className="font-bold text-blue-500 hover:underline cursor-pointer" style={{ display: "inline" }} />,
                 ul: props => <p {...props} className="list-disc text-sm font-light ml-4 mb-4" />,
                 blockquote: props => <p {...props} role="alert" className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 ml-4 mb-4" />,
-                // pre: props => <p {...props} role="alert" className="bg-gray-100 border-l-4 border-gray-500 text-gray-700 p-4 ml-4 mb-4" />,
             }}
         >
             <Layout>
