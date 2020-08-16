@@ -1,4 +1,5 @@
 import { graphql } from 'gatsby'
+import Img from 'gatsby-image'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import { MDXProvider } from '@mdx-js/react';
 import React from 'react'
@@ -29,6 +30,15 @@ export default ({ data }) => {
                         <p className="text-base text-gray-600">{siteMetadata.author} / {frontmatter.date}</p>
                         <p className="text-base text-gray-600">{timeToRead} min read</p>
                     </div>
+                    {frontmatter.cover ? (
+                        <div className="my-8 shadow-md">
+                            <Img
+                                style={{ height: "30vh" }}
+                                sizes={frontmatter.cover.childImageSharp.sizes}
+                            />
+                        </div>
+
+                    ) : null}
                     <div className="mt-8 text-base font-light">
                         <MDXRenderer>{body}</MDXRenderer>
                     </div>
@@ -46,6 +56,14 @@ export const query = graphql`
       frontmatter {
         title
         date(formatString: "Do MMM YYYY")
+        cover {
+            publicURL
+            childImageSharp {
+              sizes(maxWidth: 2000, traceSVG: { color: "#4299E1" }) {
+                ...GatsbyImageSharpSizes_tracedSVG
+              }
+            }
+          }
       }
     }
     site {
@@ -54,4 +72,5 @@ export const query = graphql`
         }
     }
   }
+
 `
