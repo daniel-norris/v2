@@ -10,9 +10,14 @@ import Project from "../components/sections/project";
 import FeaturedPosts from "../components/sections/featuredPosts";
 import Contact from '../components/sections/contact';
 
+import SEO from '../components/seo';
+
+import config from '../config/index';
+
 const Home = ({ data }) => {
     return (
         <Layout>
+            <SEO title={config.siteTitle} description={siteDescription} />
             <Hero content={data.hero.edges} />
             <About content={data.about.edges} />
             <Technology content={data.technology.edges} />
