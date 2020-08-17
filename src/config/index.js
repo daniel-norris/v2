@@ -4,7 +4,7 @@ module.exports = {
     siteTitle: "Personal Portfolio",
     siteShortTitle: "DN",
     siteDescription: "v2 personal portfolio. Dan is based in Bristol, UK and a Software Engineer for LexisNexis",
-    siteUrl: "",
+    siteUrl: "https://www.danielnorris.co.uk",
     siteLanguage: "en_UK",
     siteIcon: "",
     github: "https://github.com/daniel-norris",

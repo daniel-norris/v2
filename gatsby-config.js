@@ -6,11 +6,13 @@ module.exports = {
         title: config.siteTitle,
         description: config.siteDescription,
         author: config.author,
+        url: config.siteUrl,
     },
     plugins: [
         `gatsby-plugin-postcss`,
         `gatsby-plugin-sharp`,
         `gatsby-transformer-sharp`,
+        `gatsby-plugin-react-helmet`,
         {
             resolve: `gatsby-plugin-google-analytics`,
             options: {
