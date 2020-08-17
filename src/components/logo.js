@@ -8,7 +8,7 @@ const Logo = () => {
         <motion.div
             whileHover={(animate) =>
                 animate = {
-                    scale: [.9, 1, 1, 1, 1],
+                    // scale: [.9, 1, 1, 1, 1],
                     rotate: [0, -30, 10, -5, 0],
                     // borderRadius: ["20%", "20%", "50%", "50%", "20%"],
                 }
