@@ -29,6 +29,8 @@ import IconArrowLeft from './arrow-left';
 import IconArrowRight from './arrow-right';
 import IconExternal from './external';
 
+import IconLogo from './logo';
+
 const Icon = ({ name, color }) => {
     switch (name.toLowerCase()) {
         case "moon":
@@ -83,6 +85,8 @@ const Icon = ({ name, color }) => {
             return <IconExternal color={color} />
         case "npm":
             return <IconNpm color={color} />
+        case "logo":
+            return <IconLogo color={color} />
         default:
             return null
     }

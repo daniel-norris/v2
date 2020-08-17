@@ -6,12 +6,27 @@ import Icon from '../components/icons/index';
 
 import { navLinks } from '../config';
 
+import { motion } from 'framer-motion';
+
+const headerVariants = {
+    hidden: {
+        opacity: 0,
+    },
+    display: {
+        opacity: 1,
+    }
+}
+
 const Header = () => {
 
     const { menu } = navLinks;
 
     return (
-        <header className="flex items-center justify-between">
+        <motion.header className="flex items-center justify-between"
+            variants={headerVariants}
+            initial="hidden"
+            animate="display"
+        >
 
             <Link to="/" aria-label="home">
                 <Logo />
@@ -29,7 +44,7 @@ const Header = () => {
                 </button>
             </nav>
 
-        </header >
+        </motion.header >
     );
 };
 
