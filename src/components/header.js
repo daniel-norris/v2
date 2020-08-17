@@ -11,9 +11,11 @@ import { motion } from 'framer-motion';
 const headerVariants = {
     hidden: {
         opacity: 0,
+        y: -10,
     },
     display: {
         opacity: 1,
+        y: 0,
     }
 }
 
