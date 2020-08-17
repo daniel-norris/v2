@@ -5,7 +5,7 @@ const FeaturedPosts = ({ content, cta = true }) => {
 
     return (
 
-        <section id="blog" className="mt-6 flex-col">
+        <section id="blog" className="mt-6 flex flex-col justify-center" style={{ minHeight: "60vh" }}>
             <h3 className="text-5xl font-bold mb-6">Featured Posts</h3>
 
 

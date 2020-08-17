@@ -6,6 +6,8 @@ import IconLinkedin from './linkedin';
 import IconMedium from './medium';
 import IconDev from './dev';
 import IconTwitter from './twitter';
+import IconNpm from './npm';
+
 import IconAws from './tech/aws';
 import IconCss3 from './tech/css3';
 import IconGatsby from './tech/gatsby';
@@ -26,6 +28,8 @@ import IconVue from './tech/vue';
 import IconArrowLeft from './arrow-left';
 import IconArrowRight from './arrow-right';
 import IconExternal from './external';
+
+import IconLogo from './logo';
 
 const Icon = ({ name, color }) => {
     switch (name.toLowerCase()) {
@@ -79,6 +83,10 @@ const Icon = ({ name, color }) => {
             return <IconArrowRight color={color} />
         case "external":
             return <IconExternal color={color} />
+        case "npm":
+            return <IconNpm color={color} />
+        case "logo":
+            return <IconLogo color={color} />
         default:
             return null
     }

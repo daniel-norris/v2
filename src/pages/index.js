@@ -75,6 +75,7 @@ export const pageQuery = graphql`
           tags
           position
           github
+          npm
           external
           category
           screenshot {

@@ -4,24 +4,32 @@ import Layout from '../components/layout';
 import FeaturedPosts from '../components/sections/featuredPosts';
 import Posts from '../components/sections/posts';
 
+import { motion } from 'framer-motion';
+
 const Blog = ({ data }) => {
+
+    const blogVariants = {
+        hidden: {
+            opacity: 0,
+            x: -10,
+        },
+        display: {
+            opacity: 1,
+            x: 0,
+        }
+    }
 
     return (
 
-
-        // <section className="flex items-center justify-between mt-8" key={id} >
-        //     <div>
-        //         <p className="text-sm font-bold text-gray-500">{frontmatter.date}</p>
-        //         <h1 className="text-2xl font-bold">{frontmatter.title
-
-        // <section id="blog" className="mt-6 flex-col">
-        // <h3 className="text-5xl font-bold mb-6">Featured Posts</h3>
-
         <Layout>
-            <section className="mt-6">
-                <h1 className="text-5xl font-bold">Blog</h1>
-                <p className="font-light text-lg">I've just started blogging again but I'm aiming to make this a more regularly occurence. So join in and leave a comment if you like what you're reading. I'll be blogging about my journey as a Junior Developer and web development, in particular about Laravel, Vue and React. </p>
-            </section>
+            <motion.section className="mt-6 flex flex-col justify-center" style={{ minHeight: "60vh" }}
+                variants={blogVariants}
+                initial="hidden"
+                animate="display"
+                transition={{ delay: 0.6 }}>
+                <h1 className="text-5xl font-bold mb-6">Blog</h1>
+                <p className="font-light text-lg">I've just started blogging again but I'm aiming to make this a more regular occurence. I'll be blogging about my journey as a Junior Developer and web development, in particular about <a className="text-blue-500 font-bold hover:underline" href="https://laravel.com/">Laravel</a>, <a className="text-blue-500 font-bold hover:underline" href="https://vuejs.org/">Vue</a> and <a className="text-blue-500 font-bold hover:underline" href="https://reactjs.org/">React</a>. </p>
+            </motion.section>
             <FeaturedPosts cta={false} content={data.featured.edges} />
             <Posts content={data.posts.edges} />
         </Layout>

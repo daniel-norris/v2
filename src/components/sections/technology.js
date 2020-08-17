@@ -1,18 +1,24 @@
 import React from 'react';
 import { technology } from '../../config/index';
 import Icon from '../../components/icons/index';
+import { motion } from 'framer-motion';
 
 const Technology = ({ content }) => {
 
     const { frontmatter } = content[0].node;
 
     return (
-        <section id="technology" className="mt-6" style={{ minHeight: "60vh" }}>
+        <section id="technology" className="mt-6 flex flex-col justify-center" style={{ minHeight: "60vh" }}>
             <p className="text-lg font-light mb-6">{frontmatter.title}</p>
-            <div className="grid grid-flow-col grid-cols-9 grid-rows-2 gap-4">
+            <div className="w-full h-full flex flex-wrap">
                 {technology.map(({ name }, key) => {
                     return (
-                        <Icon name={name} key={key} />
+                        <motion.div
+                            whileHover={{ scale: 1.1, fill: '#4299E1' }}
+                            whileTap={{ scale: 0.9 }}
+                            className="w-20 p-4">
+                            <Icon name={name} key={key} />
+                        </motion.div>
                     )
                 })}
             </div>
