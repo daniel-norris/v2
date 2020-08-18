@@ -8,30 +8,32 @@ import { testimonials, socialMedia } from '../../config/index';
 
 const Testimonial = () => {
 
-    const [current, setCurrent] = useState(0);
+    const [current, setCurrent] = useState(1);
 
     return (
-        <section id="testimonial" className="mt-6 flex flex-col justify-center" style={{ height: "60vh" }}>
-            {/* https://medium.com/modex/css-tricks-expanding-beyond-a-parent-div-10d7b7204c21 */}
-            <div className="flex justify-center">
-                <div>
-                    <span className="text-2xl sm:text-6xl font-bold">
-                        "<h1 className="text-lg sm:text-3xl font-bold" style={{ display: "inline" }}>{testimonials[current].quote}</h1>"
+        <>
+            <section id="testimonial" className="mt-6 flex flex-col justify-center rounded-lg shadow-lg h-full p-4">
+                {/* https://medium.com/modex/css-tricks-expanding-beyond-a-parent-div-10d7b7204c21 */}
+                <div className="flex justify-center">
+                    <div>
+                        <span className="text-2xl sm:text-6xl font-bold">
+                            "<h1 className="text-lg sm:text-3xl font-bold" style={{ display: "inline" }}>{testimonials[current].quote}</h1>"
                     </span>
-                    <div className="mt-4 flex items-center justify-between">
-                        <p className="sm:ml-8 text-sm sm:text-lg font-light">{testimonials[current].referee} - {testimonials[current].title}</p>
-                        <a href={socialMedia[1].url}>
-                            <div className="sm:ml-8 text-xs flex sm:mr-8" >
-                                <span className="hover:underline">view on</span>
-                                <div className="ml-1 w-4">
-                                    <Icon name="linkedin" />
+                        <div className="mt-4 flex items-center justify-between">
+                            <p className="sm:ml-8 text-sm sm:text-lg font-light">{testimonials[current].referee} - {testimonials[current].title}</p>
+                            <a href={socialMedia[1].url}>
+                                <div className="sm:ml-8 text-xs flex sm:mr-8" >
+                                    <span className="hover:underline">view on</span>
+                                    <div className="ml-1 w-4">
+                                        <Icon name="linkedin" />
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </section >
             <div className="flex mt-6 sm:ml-8 justify-center">
                 <motion.button
                     whileHover={{ scale: 1.1 }}
@@ -54,7 +56,7 @@ const Testimonial = () => {
                     />
                 </motion.button>
             </div>
-        </section >
+        </>
     );
 };
 
