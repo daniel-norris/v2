@@ -14,7 +14,7 @@ const Project = ({ content }) => {
     return (
         <section id="project" className="mt-6 flex flex-col mb-8">
             <div className="pb-8">
-                <h1 className="text-5xl font-bold">Projects</h1>
+                <h1 className="text-3xl sm:text-5xl font-bold">Projects</h1>
                 <a href={github} >
                     <div className="text-xs flex items-center">
                         <p className="hover:underline">view all projects on</p>
@@ -31,59 +31,64 @@ const Project = ({ content }) => {
                     const { body, frontmatter } = project.node;
 
                     return (
-
-                        <div className={`py-8 ${frontmatter.position % 2 !== 0 ? "flex" : "flex flex-row-reverse"}`} key={frontmatter.position}>
-
-                            <div className="w-1/3">
-                                <div className="text-xs font-bold uppercase text-blue-500">
-                                    {frontmatter.category}
+                        <>
+                            <div className={`${frontmatter.position % 2 !== 0 ? "sm:flex sm:flex-row" : "sm:flex sm:flex-row-reverse"}`}>
+                                <div>
+                                    <div className="text-xs font-bold uppercase text-blue-500">
+                                        {frontmatter.category}
+                                    </div>
+                                    <h3 className="text-xl sm:text-3xl font-bold mb-6 sm:mb-0">{frontmatter.title}</h3>
                                 </div>
-                                <h3 className="text-3xl font-bold mb-6">{frontmatter.title}</h3>
-                                <div className=" font-light text-lg flex justify-between">
-                                    <div>
-                                        <MDXRenderer>{body}</MDXRenderer>
-                                        <div className="flex text-sm font-bold text-blue-500 ">
-                                            {frontmatter.tags.map((tag, key) => {
-                                                return (
-                                                    <p className="mr-2 mt-6">{tag}</p>
-                                                )
-                                            })}
-                                        </div>
-                                        <div className="flex mt-4">
-                                            {frontmatter.npm ?
+
+                            </div>
+
+                            <div className={`py-8 flex-col flex ${frontmatter.position % 2 !== 0 ? "sm:flex sm:flex-row" : "sm:flex sm:flex-row-reverse"}`} key={frontmatter.position}>
+
+                                <div className="order-3 sm:order-none flex flex-col sm:w-1/3">
+                                    <div className="font-light text-base sm:text-lg flex justify-between">
+                                        <div>
+                                            <MDXRenderer>{body}</MDXRenderer>
+                                            <div className="flex sm:justify-start justify-end text-sm font-bold text-blue-500">
+                                                {frontmatter.tags.map((tag, key) => {
+                                                    return (
+                                                        <p className="px-1 mt-4 sm:mt-6">{tag}</p>
+                                                    )
+                                                })}
+                                            </div>
+                                            <div className={`px-1 justify-end ${frontmatter.position % 2 !== 0 ? "sm:justify-start" : "sm:justify-end"} flex mt-4`}>
+                                                {frontmatter.npm ?
+                                                    <motion.a
+                                                        whileHover={{ scale: 1.1 }}
+                                                        whileTap={{ scale: 0.9 }}
+                                                        href={frontmatter.npm} className="w-8 h-8 mr-4">
+                                                        <Icon name="npm" color="gray" />
+                                                    </motion.a>
+                                                    : null}
                                                 <motion.a
                                                     whileHover={{ scale: 1.1 }}
                                                     whileTap={{ scale: 0.9 }}
-                                                    href={frontmatter.npm} className="w-8 h-8 mr-4">
-                                                    <Icon name="npm" color="gray" />
+                                                    href={frontmatter.github}
+                                                    className="w-8 h-8 mr-4">
+                                                    <Icon name="github" color="gray" />
                                                 </motion.a>
-                                                : null}
-                                            <motion.a
-                                                whileHover={{ scale: 1.1 }}
-                                                whileTap={{ scale: 0.9 }}
-                                                href={frontmatter.github}
-                                                className="w-8 h-8 mr-4">
-                                                <Icon name="github" color="gray" />
-                                            </motion.a>
-                                            <motion.a
-                                                whileHover={{ scale: 1.1 }}
-                                                whileTap={{ scale: 0.9 }}
-                                                href={frontmatter.external}
-                                                className="w-8 h-8">
-                                                <Icon name="external" color="gray" />
-                                            </motion.a>
+                                                <motion.a
+                                                    whileHover={{ scale: 1.1 }}
+                                                    whileTap={{ scale: 0.9 }}
+                                                    href={frontmatter.external}
+                                                    className="w-8 h-8">
+                                                    <Icon name="external" color="gray" />
+                                                </motion.a>
+                                            </div>
                                         </div>
                                     </div>
-
-
                                 </div>
-                            </div>
-                            <div className="w-full py-6">
-                                <Img
-                                    fluid={frontmatter.screenshot.childImageSharp.fluid}
-                                />
-                            </div>
-                        </div >
+                                <div className="order-2 sm:order-none w-full pb-6 ">
+                                    <Img
+                                        fluid={frontmatter.screenshot.childImageSharp.fluid}
+                                    />
+                                </div>
+                            </div >
+                        </>
                     )
                 })
             }

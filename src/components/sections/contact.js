@@ -8,10 +8,10 @@ const Contact = ({ content }) => {
     const { frontmatter, body } = content[0].node;
 
     return (
-        <section id="contact" className="mt-6 flex flex-col items-center justify-center" style={{ minHeight: "80vh" }}>
-            <div className="w-1/2">
-                <h3 className="text-5xl font-bold mb-6 text-center">{frontmatter.title}</h3>
-                <div className=" font-light text-lg">
+        <section id="contact" className="mt-6 flex flex-col items-center justify-center" style={{ minHeight: "100vh" }}>
+            <div className="w-3/4 sm:w-1/2">
+                <h3 className="text-3xl sm:text-5xl font-bold mb-6 text-center">{frontmatter.title}</h3>
+                <div className=" font-light text-base sm:text-lg">
                     <MDXRenderer>{body}</MDXRenderer>
                 </div>
             </div>

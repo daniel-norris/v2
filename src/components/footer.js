@@ -12,13 +12,13 @@ const Footer = () => {
             <Link to="/" aria-label="home">
                 <Logo />
             </Link>
-            <div className="flex w-1/4 justify-between">
+            <div className="flex sm:w-1/4 sm:justify-between">
                 {socialMedia.map(({ name, url }, key) => {
                     return (
                         <motion.a
                             whileHover={{ scale: 1.1, fill: "#4299E1" }}
                             whileTap={{ scale: 0.9 }}
-                            className="w-6 h-6" href={url} key={key} alt={`${name} icon`}>
+                            className="ml-6 sm:ml-0 w-6 h-6" href={url} key={key} alt={`${name} icon`}>
                             <Icon name={name} />
                         </motion.a>
                     )

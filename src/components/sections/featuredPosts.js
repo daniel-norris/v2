@@ -6,7 +6,7 @@ const FeaturedPosts = ({ content, cta = true }) => {
     return (
 
         <section id="blog" className="mt-6 flex flex-col justify-center" style={{ minHeight: "60vh" }}>
-            <h3 className="text-5xl font-bold mb-6">Featured Posts</h3>
+            <h3 className="text-3xl sm:text-5xl font-bold mb-6">Featured Posts</h3>
 
 
             {content.map((featured, key) => {
@@ -17,11 +17,13 @@ const FeaturedPosts = ({ content, cta = true }) => {
                     <Link to={fields.slug}>
                         <section className="flex items-center justify-between mt-8" key={id} >
                             <div>
-                                <p className="text-sm font-bold text-gray-500">{frontmatter.date}</p>
-                                <h1 className="text-2xl font-bold">{frontmatter.title}</h1>
-                                <p className="text-lg font-light">{excerpt}</p>
+                                <p className="text-xs sm:text-sm font-bold text-gray-500">{frontmatter.date}
+                                    <span className="sm:hidden"> &bull; {timeToRead} min read</span>
+                                </p>
+                                <h1 className="text-lg sm:text-2xl font-bold">{frontmatter.title}</h1>
+                                <p className="text-sm sm:text-lg font-light">{excerpt}</p>
                             </div>
-                            <p className="text-sm font-bold text-gray-500">{timeToRead} min read</p>
+                            <p className="hidden sm:block text-sm font-bold text-gray-500">{timeToRead} min read</p>
                         </section>
                     </Link>
                 )

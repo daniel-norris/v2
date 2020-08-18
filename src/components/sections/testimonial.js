@@ -15,14 +15,13 @@ const Testimonial = () => {
             {/* https://medium.com/modex/css-tricks-expanding-beyond-a-parent-div-10d7b7204c21 */}
             <div className="flex justify-center">
                 <div>
-                    <span className="text-6xl font-bold">
-                        "<h1 className="text-3xl font-bold" style={{ display: "inline" }}>{testimonials[current].quote}</h1>"
+                    <span className="text-2xl sm:text-6xl font-bold">
+                        "<h1 className="text-lg sm:text-3xl font-bold" style={{ display: "inline" }}>{testimonials[current].quote}</h1>"
                     </span>
-                    <div className="flex items-center justify-between">
-                        <p className="ml-8 mt-4 text-lg font-light">{testimonials[current].referee} - {testimonials[current].title}</p>
+                    <div className="mt-4 flex items-center justify-between">
+                        <p className="sm:ml-8 text-sm sm:text-lg font-light">{testimonials[current].referee} - {testimonials[current].title}</p>
                         <a href={socialMedia[1].url}>
-                            <div className="ml-8 text-xs flex" style={{ marginTop: "-30px", marginRight: "2rem" }}>
-
+                            <div className="sm:ml-8 text-xs flex sm:mr-8" >
                                 <span className="hover:underline">view on</span>
                                 <div className="ml-1 w-4">
                                     <Icon name="linkedin" />
@@ -33,7 +32,7 @@ const Testimonial = () => {
                 </div>
             </div>
 
-            <div className="flex mt-6 ml-8 justify-center">
+            <div className="flex mt-6 sm:ml-8 justify-center">
                 <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
