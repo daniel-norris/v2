@@ -12,12 +12,11 @@ import Contact from '../components/sections/contact';
 
 import SEO from '../components/seo';
 
-import config from '../config/index';
 
 const Home = ({ data }) => {
     return (
         <Layout>
-            <SEO title={config.siteTitle} description={siteDescription} />
+            <SEO />
             <Hero content={data.hero.edges} />
             <About content={data.about.edges} />
             <Technology content={data.technology.edges} />
@@ -79,8 +78,8 @@ export const pageQuery = graphql`
           visible
           tags
           position
-          github
           npm
+          github
           external
           category
           screenshot {

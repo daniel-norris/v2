@@ -27,8 +27,8 @@ const Blog = ({ data }) => {
                 initial="hidden"
                 animate="display"
                 transition={{ delay: 0.6 }}>
-                <h1 className="text-5xl font-bold mb-6">Blog</h1>
-                <p className="font-light text-lg">I've just started blogging again but I'm aiming to make this a more regular occurence. I'll be blogging about my journey as a Junior Developer and web development, in particular about <a className="text-blue-500 font-bold hover:underline" href="https://laravel.com/">Laravel</a>, <a className="text-blue-500 font-bold hover:underline" href="https://vuejs.org/">Vue</a> and <a className="text-blue-500 font-bold hover:underline" href="https://reactjs.org/">React</a>. </p>
+                <h1 className="text-3xl sm:text-5xl font-bold mb-6">Blog</h1>
+                <p className="font-light text-base sm:text-lg">I've just started blogging again but I'm aiming to make this a more regular occurence. I'll be blogging about my journey as a Junior Developer and web development, in particular about <a className="text-blue-500 font-bold hover:underline" href="https://laravel.com/">Laravel</a>, <a className="text-blue-500 font-bold hover:underline" href="https://vuejs.org/">Vue</a> and <a className="text-blue-500 font-bold hover:underline" href="https://reactjs.org/">React</a>. </p>
             </motion.section>
             <FeaturedPosts cta={false} content={data.featured.edges} />
             <Posts content={data.posts.edges} />

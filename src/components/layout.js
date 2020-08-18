@@ -11,10 +11,12 @@ const Layout = ({ children }) => {
             a: props => <a {...props} className="font-bold text-blue-500 hover:underline" style={{ display: "inline" }} />,
         }}>
             <div
-                className="mx-auto container w-3/5 mt-6 "
+                className="px-4 mx-auto container mt-6 "
                 style={{ display: "grid", minHeight: "100%", gridTemplateRows: "auto 1fr auto" }}>
                 <Header />
-                <main >{children}</main>
+                <div className="mx-auto sm:w-3/5">
+                    <main >{children}</main>
+                </div>
                 <Footer />
             </div>
         </MDXProvider >

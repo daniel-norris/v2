@@ -9,7 +9,7 @@ const Technology = ({ content }) => {
 
     return (
         <section id="technology" className="mt-6 flex flex-col justify-center" style={{ minHeight: "60vh" }}>
-            <p className="text-lg font-light mb-6">{frontmatter.title}</p>
+            <p className="text-base sm:text-lg font-light mb-6">{frontmatter.title}</p>
             <div className="w-full h-full flex flex-wrap">
                 {technology.map(({ name }, key) => {
                     return (

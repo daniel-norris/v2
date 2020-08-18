@@ -11,40 +11,7 @@ const Hero = ({ content }) => {
     const { frontmatter, body } = content[0].node;
     const { button } = navLinks;
 
-    const titleVariants = {
-        hidden: {
-            opacity: 0,
-            x: -10,
-        },
-        display: {
-            opacity: 1,
-            x: 0,
-        }
-    }
-
-    const introVariants = {
-        hidden: {
-            opacity: 0,
-            x: -10,
-        },
-        display: {
-            opacity: 1,
-            x: 0,
-        }
-    }
-
-    const bodyVariants = {
-        hidden: {
-            opacity: 0,
-            x: -10,
-        },
-        display: {
-            opacity: 1,
-            x: 0,
-        }
-    }
-
-    const buttonVariants = {
+    const variants = {
         hidden: {
             opacity: 0,
             x: -10,
@@ -58,21 +25,21 @@ const Hero = ({ content }) => {
     return (
         <section class="flex flex-col justify-center" style={{ height: "100vh" }}>
             <motion.p className="uppercase font-bold text-lg text-blue-500"
-                variants={introVariants}
+                variants={variants}
                 initial="hidden"
                 animate="display"
                 transition={{ delay: 0.6 }}>
                 {frontmatter.intro}
             </motion.p>
             <motion.h1 className="font-bold text-6xl"
-                variants={titleVariants}
+                variants={variants}
                 initial="hidden"
                 animate="display"
                 transition={{ delay: 0.8 }}>
                 {frontmatter.title}
             </motion.h1>
-            <motion.div className="font-light text-2xl w-4/5"
-                variants={bodyVariants}
+            <motion.div className="font-light text-2xl sm:w-4/5"
+                variants={variants}
                 initial="hidden"
                 animate="display"
                 transition={{ delay: 1 }}>
@@ -81,7 +48,7 @@ const Hero = ({ content }) => {
 
             <Link to={button.url}>
                 <motion.button className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded mt-6"
-                    variants={buttonVariants}
+                    variants={variants}
                     initial="hidden"
                     animate="display"
                     transition={{ delay: 1.2 }}>

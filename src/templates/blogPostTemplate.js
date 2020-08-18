@@ -19,13 +19,13 @@ export default ({ data }) => {
                 h3: props => <h3 {...props} className="text-lg font-bold mb-8" />,
                 strong: props => <strong {...props} className="font-bold" style={{ display: "inline" }} />,
                 a: props => <a {...props} className="font-bold text-blue-500 hover:underline cursor-pointer" style={{ display: "inline" }} />,
-                ul: props => <ul {...props} className="list-disc text-sm font-light ml-4 mb-4" />,
+                ul: props => <ul {...props} className="list-disc font-light ml-4 mb-4" />,
                 blockquote: props => <div {...props} role="alert" className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 ml-4 mb-4" />,
             }}
         >
             <Layout>
                 <section className="mt-8" style={{ minHeight: "60vh" }}>
-                    <h1 className="text-5xl font-bold">{frontmatter.title}</h1>
+                    <h1 className="text-3xl sm:text-5xl font-bold">{frontmatter.title}</h1>
                     <div className="flex justify-between">
                         <p className="text-base text-gray-600">{siteMetadata.author} / {frontmatter.date}</p>
                         <p className="text-base text-gray-600">{timeToRead} min read</p>
