@@ -1,0 +1,1396 @@
+---
+title: How To Build A Portfolio Using Gatsby - Part 1
+date: 2020-08-24
+published: true
+featured: true
+cover: ./portfolio.jpg
+---
+
+[[Live Demo](https://gatsby-portfolio-how-to.netlify.app/)]
+
+Hey, welcome to this two part tutorial where I'll walk you through how to build your first portfolio with Gatsby, Tailwind CSS and Framer Motion.
+
+This is broken down into two parts; the first covers everything you need to know to get going on building your basic portfolio and projects overview; the second part takes a bit of a deeper dive into one particular way you could choose to build a blog with Gatsby using MDX.
+
+Like with most things in tech, there is a lot of existing content out there on similar topics but on my travels I couldn't find a complete joined up tutorial covering the two or with the technology stack I wanted to use. This was especially true when I was trying to add additional functionality to my blog such as code blocks, syntax highlighting and other features.
+
+A small caveat; I'm no expert but I have just gone through this very process building my own portfolio, which you can take a look at [here](http://www.danielnorris.co.uk), and blog and a large part of the writing process for me is improving my own understanding of a topic.
+
+# Who is this for?
+
+This isn't a Gatsby starter, although you are welcome to use the GitHub repository as a starter for your own use. If you do, please star the repository. This tutorial is aimed at people who are interested in how to build their own Gatsby portfolio from scratch without the aid of a starter.
+
+# What will this cover?
+
+We'll cover the following:
+
+**Part 1**
+
+- Setting up
+- Configuring Tailwind CSS
+- Create site config file
+- Create layout component
+- Create header component
+- Create icon component and helper function
+- Create footer component
+- Set up image plugins
+- Create about component
+- Create projects component
+- Create a contact me component
+- Making your portfolio responsive
+- Using Framer Motion to animate your components
+- Deployment using Netlify
+- Summary
+
+<span className="text-gray-500">
+
+**Part 2**
+
+- Why a blog?
+- What are you going to build?
+- Set up file system plugin
+- Set up MDX plugin
+- Create a new blog page
+- Create your first blog article
+- Create slugs for MDX blog posts
+- Create a featured posts section
+- Dynamically show article read times
+- Configure MDX styles
+- Add syntax highlighting for code blocks
+- Add a copy to clipboard hook
+- Add cover images to blog posts
+- Add Google analytics
+- Summary
+
+</span>
+
+# Why Gatsby?
+
+There were three main reasons for me why I ended up choosing Gatsby compared to many of the other Static Site Generators out there like Jekyll, Next.js, Hugo or even a SSG at all.
+
+- **It's built on React**
+
+  You can leverage all the existing capability around component development React provides and bundle it with the added functionality that Gatsby provides.
+
+- **A lot of configuration and tooling comes free**
+
+  This was a huge draw for me. I wanted a solution for my portfolio that was quick to get off the ground and once completed, I could spent as little time as possible updating it or including a new blog post. The Developer experience is rather good and you get things like hot reloading and code splitting for free so you can spend less time on configuration and more on development.
+
+- **The Gatsby ecosystem is really mature**
+
+  There's a lot of useful information available to get you started which helps as a beginner. On top of that, the Gatsby plugin system makes common tasks like lazy-loading and image optimisation a quick and straight-forward process.
+
+I migrated my blog from Jekyll originally and haven't looked back. If you're wondering how Gatsby compares to other JAMstack solutions available and whether you should migrate, then you can find out more [here](https://www.gatsbyjs.com/features/jamstack/).
+
+# What are you going to build?
+
+There are a lot of starter templates that are accessible from the Gatsby website which enable you to get off the ground running with a ready-made blog or portfolio in a couple clicks. What that doesn't do is break down how it works and how you could make one yourself. If you're more interested in getting stuff done than how it works, then I recommend taking a look at the starters [here](https://www.gatsbyjs.com/starters/?v=2).
+
+We're going to build a basic portfolio site that looks like the one below above in the demo. We'll go through how to setup and configure your project to use Tailwind CSS, query and present MDX data sources using GraphQL, add transitions and animations using Framer and later deploy to Netlify.
+
+# Setting up
+
+Firstly, we're going to need to install npm and initialise a repository. The `-y` flag automatically accepts all the prompts during the npm wizard.
+
+```bash
+npm init -y && git init
+```
+
+You'll want to exclude some of the project files from being commited to git. Include these files in the `.gitignore` file.
+
+```json
+// .gitignore
+
+.cache
+node_modules
+public
+```
+
+Now you'll need to install the dependencies you'll need.
+
+```bash
+npm i gatsby react react-dom
+```
+
+Part of Gatsby's magic is that you are provided with routing for free. Any `.js` file that is created within `src/pages` is automatically generated with it's own url path.
+
+Lets go and create your first page. Create a `src/pages/index.js` file in your root directory.
+
+Create a basic component for now.
+
+```bash
+// index.js
+
+import React from "react";
+
+export default () => {
+    return <div>My Portfolio</div>;
+};
+```
+
+This isn't strictly necessary but it's a small quality of life improvement. Let's create a script in your `package.json` to run your project locally. The `-p` specifies the port and helps to avoid conflicts if you are running multiple projects simultaneously.
+
+You can specify any port you want here or choose to omit this. I've chosen port 9090. The `-o` opens a new browser tab automatically for you.
+
+```bash
+// package.json
+
+"scripts": {
+	"run": "gatsby develop -p 9090 -o"
+}
+```
+
+You can run your project locally on your machine now from [http://localhost:8000](http://localhost:8000) with hot-reloading already baked in.
+
+```bash
+npm run-script run
+```
+
+ESLint, Webpack and Babel are all automatically configured and setup for you as part of Gatsby. This next part is optional but we are going to install Prettier which is a code formatter and will help to keep your code consistent with what we are doing in the tutorial, plus it's _prettier_. The `-D` flag installs the package as a developer dependency only.
+
+```bash
+npm i -D prettier
+```
+
+Create a `.prettierignore` and `prettier.config.js` file in your root directory.
+
+```json
+// .prettierignore
+
+.cache
+package.json
+package-lock.json
+public
+```
+
+```jsx
+// prettier.config.js
+
+module.exports = {
+  tabWidth: 4,
+  semi: false,
+  singleQuote: true,
+}
+```
+
+The ignore file selects which files to ignore and not format. The second config file imports an options object with settings including the width of tabs in spaces (tabWidth), whether to include semi-colons or not (semi) and whether to convert all quotes to single quotes (singleQuote).
+
+# Configuring Tailwind CSS
+
+Let's now install and configure Tailwind. The second command initialises a configuration file which we'll talk about shortly.
+
+```bash
+npm i -D tailwindcss && npx tailwindcss init
+```
+
+Now open the new `tailwind.config.js` file in your root directory and include the following options object.
+
+```javascript
+// tailwind.config.js
+
+module.exports = {
+  purge: ["./src/**/*.js"],
+  theme: {
+    extend: {},
+  },
+  variants: {},
+  plugins: [],
+}
+```
+
+The config file uses a glob and a Tailwind dependency called PurgeCSS to remove any unused CSS classes from files located in `.src/**/*.js` . PurgeCSS only performs this on build but will help to make your project more performant. For more info, check out the Tailwind CSS docs [here](https://tailwindcss.com/docs/controlling-file-size).
+
+Install the PostCSS plugin.
+
+```shell
+npm i gatsby-plugin-postcss
+```
+
+Create a `postcss.config.js` file in root and include the following.
+
+```shell
+touch postcss.config.js
+```
+
+```javascript
+// postcss.config.js
+
+module.exports = () => ({
+  plugins: [require("tailwindcss")],
+})
+```
+
+Create a `gatsby-config.js` file and include the plugin. This is where all of your plugins will go including any config needed for those plugins.
+
+```bash
+touch gatsby.config.js
+```
+
+```jsx
+// gatsby-config.js
+
+module.exports = {
+  plugins: [`gatsby-plugin-postcss`],
+}
+```
+
+You need to create an `index.css` file to import Tailwind's directives.
+
+```bash
+mkdir -p src/css
+touch src/css/index.css
+```
+
+Then import the directives and include PurgeCSS's whitelist selectors in `index.css` for best practice.
+
+```css
+/* purgecss start ignore */
+@tailwind base;
+@tailwind components;
+/* purgecss end ignore */
+
+@tailwind utilities;
+```
+
+Finally, create a `gatsby-browser.js` file in your root and import the styles.
+
+```javascript
+// gatsby-browser.js
+
+import "./src/css/index.css"
+```
+
+Let's check it works. Open up your `index.js` file and add the following styles. Now restart your development server. The div tag should have styles applied to it.
+
+```jsx
+// index.js
+
+export default () => {
+  return <div class="bg-blue-300 text-3xl p-4">My Portfolio</div>
+}
+```
+
+# Create site config file
+
+We're going to create a site config file. This isn't specific to Gatsby but enables us to create a single source of truth for all of the sites metadata and will help to minimise the amount of time you need to spend updating the site in the future.
+
+```bash
+mkdir -p src/config/
+touch src/config/index.js
+```
+
+Now copy the object below into your file. You can substitute the data for your own.
+
+```jsx
+// config/index.js
+
+module.exports = {
+  author: "Dan Norris",
+  siteTitle: "Dan Norris - Portfolio",
+  siteShortTitle: "DN",
+  siteDescription:
+    "v2 personal portfolio. Dan is a Software Engineer and based in Bristol, UK",
+  siteLanguage: "en_UK",
+  socialMedia: [
+    {
+      name: "Twitter",
+      url: "https://twitter.com/danielpnorris",
+    },
+    {
+      name: "LinkedIn",
+      url: "https://www.linkedin.com/in/danielpnorris/",
+    },
+    {
+      name: "Medium",
+      url: "https://medium.com/@dan.norris",
+    },
+    {
+      name: "GitHub",
+      url: "https://github.com/daniel-norris",
+    },
+    {
+      name: "Dev",
+      url: "https://dev.to/danielnorris",
+    },
+  ],
+  navLinks: {
+    menu: [
+      {
+        name: "About",
+        url: "/#about",
+      },
+      {
+        name: "Projects",
+        url: "/#projects",
+      },
+      {
+        name: "Contact",
+        url: "/#contact",
+      },
+    ],
+    button: {
+      name: "Get In Touch",
+      url: "/#contact",
+    },
+  },
+}
+```
+
+# Create layout component
+
+We're now going to create a layout component which will act as a wrapper for any further page content to the site.
+
+Create a new component at `src/components/Layout.js` and add the following:
+
+```jsx
+import React from "react"
+import PropTypes from "prop-types"
+
+const Layout = ({ children }) => {
+  return (
+    <div
+      className="min-h-full grid"
+      style={{
+        gridTemplateRows: "auto 1fr auto auto",
+      }}
+    >
+      <header>My Portfolio</header>
+      <main>{children}</main>
+      <footer>Footer</footer>
+    </div>
+  )
+}
+
+Layout.propTypes = {
+  children: PropTypes.any,
+}
+
+export default Layout
+```
+
+Tailwind provides us a utility based CSS framework which is easily extensible and you don't have to fight to override. We've created a wrapper div here that has a min height of 100% and created a grid with three rows for our header, footer and the rest of our content.
+
+This will ensure our footer stays at the bottom of the page once we start adding content. We'll break this into smaller sub-components shortly.
+
+Now let's import this component into our main `index.js` page and pass some text as a child prop to our Layout component for now.
+
+```jsx
+import React from "react"
+import Layout from "../components/Layout"
+
+export default () => {
+  return (
+    <Layout>
+      <main>This is the hero section.</main>
+    </Layout>
+  )
+}
+```
+
+# Create a header component
+
+Let's now create a sub component for the header at `src/components/Header.js` and some navigation links using our site config.
+
+```jsx
+// Header.js
+
+import React from "react"
+import { Link } from "gatsby"
+
+import { navLinks, siteShortTitle } from "../config"
+
+const Header = () => {
+  const { menu } = navLinks
+
+  return (
+    <header className="flex items-center justify-between py-6 px-12 border-t-4 border-red-500">
+      <Link to="/" aria-label="home">
+        <h1 className="text-3xl font-bold">
+          {siteShortTitle}
+          <span className="text-red-500">.</span>
+        </h1>
+      </Link>
+      <nav className="flex items-center">
+        {menu.map(({ name, url }, key) => {
+          return (
+            <Link
+              className="text-lg font-bold px-3 py-2 rounded hover:bg-red-100 "
+              key={key}
+              to={url}
+            >
+              {name}
+            </Link>
+          )
+        })}
+      </nav>
+    </header>
+  )
+}
+
+export default Header
+```
+
+We've used the Gatsby `Link` component to route internally and then iterated over our destructured config file to create our nav links and paths.
+
+Import your new Header component into Layout.
+
+```jsx
+// Layout.js
+
+import Header from "../components/Header"
+```
+
+# Create icon component and helper function
+
+Before we start on the footer, we're going to create an Icon component and helper function that will enable you to use a single class that accepts a name and color prop for all your svg icons.
+
+Create `src/components/icons/index.js` and `src/components/icons/Github.js`. We'll use a switch for our helper function.
+
+```jsx
+// index.js
+
+import React from "react"
+
+import IconGithub from "./Github"
+
+const Icon = ({ name, color }) => {
+  switch (name.toLowerCase()) {
+    case "github":
+      return <IconGithub color={color} />
+    default:
+      return null
+  }
+}
+
+export default Icon
+```
+
+We're using svg icons from [https://simpleicons.org/](https://simpleicons.org/). Copy the svg tag for a Github icon and include it in your Github icon sub component. Then do the same for the remaining social media accounts you set up in your site config file.
+
+```jsx
+import React from "react"
+import PropTypes from "prop-types"
+
+const Github = ({ color }) => {
+  return (
+    <svg role="img" viewBox="0 0 24 24" fill={color}>
+      <title>GitHub icon</title>
+      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+    </svg>
+  )
+}
+
+Github.propTypes = {
+  color: PropTypes.string,
+}
+
+Github.defaultProps = {
+  color: "#000000",
+}
+
+export default Github
+```
+
+Your final `index.js` should look something like this:
+
+```jsx
+// index.js
+
+import React from "react"
+
+import IconGithub from "./Github"
+import IconLinkedin from "./Linkedin"
+import IconMedium from "./Medium"
+import IconDev from "./Dev"
+import IconTwitter from "./Twitter"
+
+const Icon = ({ name, color }) => {
+  switch (name.toLowerCase()) {
+    case "github":
+      return <IconGithub color={color} />
+    case "linkedin":
+      return <IconLinkedin color={color} />
+    case "dev":
+      return <IconDev color={color} />
+    case "medium":
+      return <IconMedium color={color} />
+    case "twitter":
+      return <IconTwitter color={color} />
+    default:
+      return null
+  }
+}
+
+export default Icon
+```
+
+# Create footer component
+
+Lets now create our footer sub component. Create `src/components/Footer.js` and copy across:
+
+```jsx
+import React from "react"
+import { Link } from "gatsby"
+
+import { siteShortTitle } from "../config/index"
+
+const Footer = () => {
+  return (
+    <footer className="flex items-center justify-between bg-red-500 py-6 px-12">
+      <Link to="/" aria-label="home">
+        <h1 className="text-3xl font-bold text-white">{siteShortTitle}</h1>
+      </Link>
+    </footer>
+  )
+}
+
+export default Footer
+```
+
+Let's now iterate over our social media icons and use our new Icon component. Add the following:
+
+```jsx
+import Icon from "../components/icons/index"
+import { socialMedia, siteShortTitle } from "../config/index"
+
+...
+
+<div className="flex">
+  {socialMedia.map(({ name, url }, key) => {
+    return (
+      <a className="ml-8 w-6 h-6" href={url} key={key} alt={`${name} icon`}>
+        <Icon name={name} color="white" />
+      </a>
+    )
+  })}
+</div>
+
+...
+```
+
+# Create a hero component
+
+We're going to create a hero for your portfolio site now. In order to inject a bit of personality into this site, we're going to use a svg background from [http://www.heropatterns.com/](http://www.heropatterns.com/) called "Diagonal Lines". Feel free to choose anything you like.
+
+Let's extend our Tailwind CSS styles and add a new class.
+
+```css
+.bg-pattern {
+  background-color: #fff5f5;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f56565' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+}
+```
+
+Create a new `Hero.js` component and let's start to build out our hero section.
+
+```jsx
+import React from "react"
+import { Link } from "gatsby"
+import { navLinks } from "../config/index"
+
+const Hero = ({ content }) => {
+  const { button } = navLinks
+
+  return (
+    <div className="flex items-center bg-pattern shadow-inner min-h-screen">
+      <div className="bg-white w-full py-6 shadow-lg">
+        <section class="mx-auto container w-3/5">
+          <h1 className="uppercase font-bold text-lg text-red-500">
+            Hi, my name is
+          </h1>
+          <h2 className="font-bold text-6xl">Dan Norris</h2>
+          <p className=" text-2xl w-3/5">
+            I’m a Software Engineer based in Bristol, UK specialising in
+            building incredible websites and applications.
+          </p>
+
+          <Link to={button.url}>
+            <button className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mt-6">
+              {button.name}
+            </button>
+          </Link>
+        </section>
+      </div>
+    </div>
+  )
+}
+
+export default Hero
+```
+
+# Implement MDX into your site
+
+Thanks to Gatsby's use of GraphQL as a data management layer, you can incorporate a lot of different data sources into your site including various headless CMS's. We're going to use MDX for our portfolio.
+
+It enables us to put all of our text content and images together into a single query, provides the ability to extend the functionality of your content with React and JSX and for that reason is a great solution for long-form content like blog posts. We're going to start by installing:
+
+```bash
+npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react gatsby-source-filesystem
+```
+
+We'll put all of our `.mdx` content into its own file.
+
+```bash
+mkdir -p src/content/hero
+touch src/content/hero/hero.mdx
+```
+
+Let's add some content to the `hero.mdx` file.
+
+```mdx
+---
+intro: "Hi, my name is"
+title: "Dan Norris"
+---
+
+I’m a Software Engineer based in Bristol, UK specialising in building incredible websites and applications.
+```
+
+We'll need to configure these new plugins in our `gatsby-config.js` file. Add the following.
+
+```javascript
+// gatsby-config.js
+
+module.exports = {
+  plugins: [
+    `gatsby-plugin-postcss`,
+    `gatsby-plugin-mdx`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `content`,
+        path: `${__dirname}/src/content`,
+      },
+    },
+  ],
+}
+```
+
+# Make your first GraphQL query
+
+Now that we are able to use `.mdx` files, we need to create a query to access the data. Run your development server and go to [http://localhost:9090/\_\_\_graphql](http://localhost:9090/___graphql). Gatsby has a GUI that enables you to construct your data queries in the browser.
+
+Once we've created our query, we'll pass this into a template literal which will pass the whole data object as a prop to our component. Your `index.js` should now look like this:
+
+```jsx
+// index.js
+
+import React from "react"
+import Layout from "../components/Layout"
+import Hero from "../components/Hero"
+import { graphql } from "gatsby"
+
+export default ({ data }) => {
+  return (
+    <Layout>
+      <Hero content={data.hero.edges} />
+    </Layout>
+  )
+}
+
+export const pageQuery = graphql`
+  {
+    hero: allMdx(filter: { fileAbsolutePath: { regex: "/hero/" } }) {
+      edges {
+        node {
+          body
+          frontmatter {
+            intro
+            title
+          }
+        }
+      }
+    }
+  }
+`
+```
+
+We'll need to import `MDXRenderer` from `gatsby-plugin-mdx` to render the body text from the mdx file. Your `Hero.js` should now look like this:
+
+```jsx
+import React from "react"
+import { Link } from "gatsby"
+import { MDXRenderer } from "gatsby-plugin-mdx"
+import { navLinks } from "../config/index"
+
+const Hero = ({ content }) => {
+  const { frontmatter, body } = content[0].node
+  const { button } = navLinks
+
+  return (
+    <div className="flex items-center bg-pattern shadow-inner min-h-screen">
+      <div className="bg-white w-full py-6 shadow-lg">
+        <section class="mx-auto container w-4/5">
+          <h1 className="uppercase font-bold text-lg text-red-500">
+            {frontmatter.intro}
+          </h1>
+          <h2 className="font-bold text-6xl">{frontmatter.title}</h2>
+          <p className="font-thin text-2xl w-3/5">
+            <MDXRenderer>{body}</MDXRenderer>
+          </p>
+
+          <Link to={button.url}>
+            <button className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mt-6">
+              {button.name}
+            </button>
+          </Link>
+        </section>
+      </div>
+    </div>
+  )
+}
+
+export default Hero
+```
+
+# Set up image plugins
+
+We're going to need to load an image for our about page, so we'll use the `gatsby-image` to achieve this. It provides lazy-loading, image optimisation and additional processing features like blur-up and svg outlining with minimal effort.
+
+```bash
+npm install gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image
+```
+
+We need to include these new plugins into our config file.
+
+```javascript
+// gatsby-config.js
+
+module.exports = {
+  plugins: [`gatsby-plugin-sharp`, `gatsby-transformer-sharp`],
+}
+```
+
+We should now be able to query and import images using `gatsby-image` that are located in the `src/content/` folder that `gatsby-source-filesystem` is pointing at in your `gatsby-config.js` file. Let's try by making our about section.
+
+# Create an about component
+
+Let's start by creating a new mdx file for our content in `src/content/about/about.mdx`. I've used one of my images for the demo but you can use your own or download one here from [https://unsplash.com/](https://unsplash.com/). It needs to be placed into the same directory as your `about.mdx` file.
+
+```markdown
+---
+title: About Me
+image: avatar.jpeg
+caption: Avon Gorge, Bristol, UK
+---
+
+Hey, I’m Dan. I live in Bristol, UK and I’m a Software Engineer at LexisNexis, a FTSE100 tech company that helps companies make better decisions by building applications powered by big data.
+
+I have a background and over 5 years experience as a Principal Technical Recruiter and Manager. Some of my clients have included FTSE100 and S&amp;P500 organisations including Marsh, Chubb and Hiscox.
+
+After deciding that I wanted to shift away from helping companies sell their tech enabled products and services and start building them myself, I graduating from a tech accelerator called DevelopMe\_ in 2020 and requalified as a Software Engineer. I enjoy creating seamless end-to-end user experiences and applications that add value.
+
+In my free time you can find me rock climbing around local crags here in the UK and trying to tick off all the 4,000m peaks in the Alps.
+```
+
+Now, let's extend our GraphQL query on our `index.js` page to include data for our about page. You'll also need to import and use the new About component. Make these changes to your `index.js` file.
+
+```jsx
+// index.js
+
+import About from '../components/About'
+
+...
+
+<About content={data.about.edges} />
+
+...
+
+export const pageQuery = graphql`
+    {
+        hero: allMdx(filter: { fileAbsolutePath: { regex: "/hero/" } }) {
+            edges {
+                node {
+                    body
+                    frontmatter {
+                        intro
+                        title
+                    }
+                }
+            }
+        }
+        about: allMdx(filter: { fileAbsolutePath: { regex: "/about/" } }) {
+            edges {
+                node {
+                    body
+                    frontmatter {
+                        title
+												caption
+                        image {
+                            childImageSharp {
+                                fluid(maxWidth: 800) {
+                                    ...GatsbyImageSharpFluid
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+`
+```
+
+Let's go make our About component now. You'll need to import `MDXRenderer` again for the body of your mdx file. You'll also need to import an `Img` component from `gatsby-image`.
+
+```jsx
+import React from "react"
+import { MDXRenderer } from "gatsby-plugin-mdx"
+import Img from "gatsby-image"
+
+const About = ({ content }) => {
+  const { frontmatter, body } = content[0].node
+
+  return (
+    <section id="about" className="my-6 mx-auto container w-3/5">
+      <h3 className="text-3xl font-bold mb-6">{frontmatter.title}</h3>
+      <div className=" font-light text-lg flex justify-between">
+        <div className="w-1/2">
+          <MDXRenderer>{body}</MDXRenderer>
+        </div>
+        <div className="w-1/2">
+          <figure className="w-2/3 mx-auto">
+            <Img fluid={frontmatter.image.childImageSharp.fluid} />
+            <figurecaption className="text-sm">
+              {frontmatter.caption}
+            </figurecaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default About
+```
+
+You might have noticed that your `body` text isn't displaying properly and doesn't have any line breaks. If you used the default syntax for Markdown for things like `## Headings` then the same thing would happen; no styling would occur.
+
+Let's fix that now and import a component called `MDXProvider` which will allow us to define styling for markdown elements. You could choose to link this up to already defined React components but we're just going to do it inline. Your `Layout.js` file should now look like this.
+
+```jsx
+import React from "react"
+import PropTypes from "prop-types"
+import { MDXProvider } from "@mdx-js/react"
+import Header from "../components/Header"
+import Footer from "../components/Footer"
+
+const Layout = ({ children }) => {
+  return (
+    <MDXProvider
+      components={{
+        p: props => <p {...props} className="mt-4" />,
+      }}
+    >
+      <div
+        className="min-h-full grid"
+        style={{
+          gridTemplateRows: "auto 1fr auto",
+        }}
+      >
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </div>
+    </MDXProvider>
+  )
+}
+
+Layout.propTypes = {
+  children: PropTypes.any,
+}
+
+export default Layout
+```
+
+# Create projects component
+
+Alrite, alrite, alrite. We are about halfway through.
+
+Most of the configuration is now done for the basic portfolio, so let's go ahead and create the last two sections. Let's create some example projects that we want to feature on the front page of our portfolio.
+
+Create a new file `src/content/project/<your-project>/<your-project>.mdx` for instance and an accompanying image for your project. I'm calling mine "Project Uno".
+
+```jsx
+---
+title: 'Project Uno'
+category: 'Featured Project'
+screenshot: './project-uno.jpg'
+github: 'https://github.com/daniel-norris'
+external: 'https://www.danielnorris.co.uk'
+tags:
+    - React
+    - Redux
+    - Sass
+    - Jest
+visible: 'true'
+position: 0
+---
+
+Example project, designed to solve customer's X, Y and Z problems. Built with Foo and Bar in mind and achieved over 100% increase in key metric.
+```
+
+Now do the same for two other projects.
+
+Once you're done, we'll need to create an additional GraphQL query for the project component. We'll want to filter out any other files in the `content` directory that are not associated with projects and only display projects that have a `visible` frontmatter attribute equal to `true`. Let's all sort the data by their `position` frontmatter value in ascending order.
+
+Add this query to your `index.js` page.
+
+```jsx
+project: allMdx(
+            filter: {
+                fileAbsolutePath: { regex: "/project/" }
+                frontmatter: { visible: { eq: "true" } }
+            }
+            sort: { fields: [frontmatter___position], order: ASC }
+        ) {
+            edges {
+                node {
+                    body
+                    frontmatter {
+                        title
+                        visible
+                        tags
+                        position
+                        github
+                        external
+                        category
+                        screenshot {
+                            childImageSharp {
+                                fluid {
+                                    ...GatsbyImageSharpFluid
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+```
+
+Let's now create our `Project` component. You'll need to iterate over the `content` object to display all of the projects you have just created.
+
+```jsx
+import React from "react"
+import { MDXRenderer } from "gatsby-plugin-mdx"
+import Icon from "../components/icons/index"
+import Img from "gatsby-image"
+
+const Project = ({ content }) => {
+  return (
+    <section id="projects" className="my-8 w-3/5 mx-auto">
+      {content.map((project, key) => {
+        const { body, frontmatter } = project.node
+
+        return (
+          <div className="py-8 flex" key={frontmatter.position}>
+            <div className="w-1/3">
+              <h1 className="text-xs font-bold uppercase text-red-500">
+                {frontmatter.category}
+              </h1>
+              <h2 className="text-3xl font-bold mb-6">{frontmatter.title}</h2>
+              <div className=" font-light text-lg flex justify-between">
+                <div>
+                  <MDXRenderer>{body}</MDXRenderer>
+                  <div className="flex text-sm font-bold text-red-500 ">
+                    {frontmatter.tags.map((tag, key) => {
+                      return <p className="mr-2 mt-6">{tag}</p>
+                    })}
+                  </div>
+                  <div className="flex mt-4">
+                    <a href={frontmatter.github} className="w-8 h-8 mr-4">
+                      <Icon name="github" />
+                    </a>
+                    <a href={frontmatter.external} className="w-8 h-8">
+                      <Icon name="external" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="w-full py-6">
+              <Img fluid={frontmatter.screenshot.childImageSharp.fluid} />
+            </div>
+          </div>
+        )
+      })}
+    </section>
+  )
+}
+
+export default Project
+```
+
+I've created an additional `External.js` icon component for the external project links. You can find additional svg icons at [https://heroicons.dev/](https://heroicons.dev/).
+
+Let's now import this into our `index.js` file and pass it the `data` object as a prop.
+
+```jsx
+import Project from "../components/Project"
+
+export default ({ data }) => {
+  return (
+    <Layout>
+      ...
+      <Project content={data.project.edges} />
+      ...
+    </Layout>
+  )
+}
+```
+
+# Create a contact me component
+
+The final section requires us to build out a contact component. You could do this in a few ways but we're just going to include a button with a `mailto` link for now.
+
+Let's start by creating a `contact.mdx` file.
+
+```markdown
+---
+title: Get In Touch
+callToAction: Say Hello
+---
+
+Thanks for working through this tutorial.
+
+It's always great to hear feedback on what people think of your content and or even how you may have used this tutorial to build your own portfolio using Gatsby.
+
+Ways you could show your appreciation 🙏 include: dropping me an email below and let me know what you think, leave a star ⭐ on the GitHub repository or send me a message on Twitter 🐤.
+```
+
+Create a new GraphQL query for the contact component.
+
+```markdown
+contact: allMdx(filter: { fileAbsolutePath: { regex: "/contact/" } }) {
+edges {
+node {
+frontmatter {
+title
+callToAction
+}
+body
+}
+}
+}
+```
+
+Let's now create a `Contact.js` component.
+
+```jsx
+import React from "react"
+import { MDXRenderer } from "gatsby-plugin-mdx"
+
+const Contact = ({ content }) => {
+  const { frontmatter, body } = content[0].node
+
+  return (
+    <section
+      id="contact"
+      className="mt-6 flex flex-col items-center justify-center w-3/5 mx-auto min-h-screen"
+    >
+      <div className="w-1/2">
+        <h3 className="text-5xl font-bold mb-6 text-center">
+          {frontmatter.title}
+        </h3>
+        <div className="text-lg font-thin">
+          <MDXRenderer>{body}</MDXRenderer>
+        </div>
+      </div>
+      <a href="mailto:dan.norris@hotmail.com">
+        <button className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mt-6">
+          {frontmatter.callToAction}
+        </button>
+      </a>
+    </section>
+  )
+}
+
+export default Contact
+```
+
+The last thing to do is import it into the `index.js` file.
+
+```jsx
+import Contact from "../components/Contact"
+
+export default ({ data }) => {
+  return (
+    <Layout>
+      ...
+      <Contact content={data.contact.edges} />
+      ...
+    </Layout>
+  )
+}
+```
+
+# Making your portfolio responsive
+
+If we inspect our site using Chrome `F12` then we can see that not all the content is optimised for mobile. The biggest problems appear to be images and spacing around the main sections. Luckily with Tailwind, setting styles for particular breakpoints takes little to no time at all. Let's do that now.
+
+If we take a look at the `Header.js` component we can see that the nav bar is looking a bit cluttered. Ideally what we would do here is add a hamburger menu button but we're going to keep this simple and add some breakpoints and change the padding.
+
+Tailwind CSS has a number of default breakpoints that you can prefix before classes. They include `sm` (640px), `md` (768px), `lg` (1024px) and `xl` (1280px). It's a mobile-first framework and so if we set a base style, e.g. `sm:p-8` then it will apply padding to all breakpoints over 640px.
+
+Let's improve the header by applying some breakpoints.
+
+```jsx
+// Header.js
+
+<header className="flex items-center justify-between py-2 px-1 sm:py-6 sm:px-12 border-t-4 border-red-500">
+  ...
+</header>
+```
+
+Let's do the same for the hero component.
+
+```jsx
+// Hero.js
+
+<div className="flex items-center bg-pattern shadow-inner min-h-screen">
+  ...
+  <section class="mx-auto container w-4/5 sm:w-3/5">
+    ...
+    <p className="font-thin text-2xl sm:w-4/5">
+      <MDXRenderer>{body}</MDXRenderer>
+    </p>
+    ...
+  </section>
+  ...
+</div>
+```
+
+Your projects component will now look like this.
+
+```jsx
+import React from "react"
+import { MDXRenderer } from "gatsby-plugin-mdx"
+import Icon from "../components/icons/index"
+import Img from "gatsby-image"
+
+const Project = ({ content }) => {
+  return (
+    <section id="projects" className="my-8 w-4/5 md:w-3/5 mx-auto">
+      {content.map((project, key) => {
+        const { body, frontmatter } = project.node
+
+        return (
+          <div className="py-8 md:flex" key={frontmatter.position}>
+            <div className="md:w-1/3 mr-4">
+              <h1 className="text-xs font-bold uppercase text-red-500">
+                {frontmatter.category}
+              </h1>
+              <h2 className="text-3xl font-bold mb-6">{frontmatter.title}</h2>
+              <div className="md:hidden">
+                <Img fluid={frontmatter.screenshot.childImageSharp.fluid} />
+              </div>
+              <div className=" font-light text-lg flex justify-between">
+                <div>
+                  <MDXRenderer>{body}</MDXRenderer>
+                  <div className="flex text-sm font-bold text-red-500 ">
+                    {frontmatter.tags.map((tag, key) => {
+                      return <p className="mr-2 mt-6">{tag}</p>
+                    })}
+                  </div>
+                  <div className="flex mt-4">
+                    <a href={frontmatter.github} className="w-8 h-8 mr-4">
+                      <Icon name="github" />
+                    </a>
+                    <a href={frontmatter.external} className="w-8 h-8">
+                      <Icon name="external" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="hidden md:block w-full py-6">
+              <Img fluid={frontmatter.screenshot.childImageSharp.fluid} />
+            </div>
+          </div>
+        )
+      })}
+    </section>
+  )
+}
+
+export default Project
+```
+
+Finally, your contact component should look something like this.
+
+```jsx
+import React from "react"
+import { MDXRenderer } from "gatsby-plugin-mdx"
+
+const Contact = ({ content }) => {
+  const { frontmatter, body } = content[0].node
+
+  return (
+    <section
+      id="contact"
+      className="mt-6 flex flex-col items-center justify-center w-4/5 sm:w-3/5 mx-auto min-h-screen"
+    >
+      <div className="sm:w-1/2">
+        <h3 className="text-5xl font-bold mb-6 text-center">
+          {frontmatter.title}
+        </h3>
+        <div className="text-lg font-thin">
+          <MDXRenderer>{body}</MDXRenderer>
+        </div>
+      </div>
+      <a href="mailto:dan.norris@hotmail.com">
+        <button className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mt-6">
+          {frontmatter.callToAction}
+        </button>
+      </a>
+    </section>
+  )
+}
+
+export default Contact
+```
+
+# Using Framer Motion to animate your components
+
+Framer is an incredibly simple and straight forward way to animate your React projects. It's API is well documented and can be found [here](https://www.framer.com/api/motion/). Motion enables you to declaratively add animations and gestures to any html or svg element.
+
+For simple use cases, all you need to do is import the `motion` component and pass it a variants object with your start and end state values. Let's do that now and stagger transition animations for the header and hero components. Add this to your `Header.js` component and swap our the `header` element for your new `motion.header` component.
+
+```jsx
+// Header.js
+
+import { motion } from 'framer-motion'
+
+...
+
+const headerVariants = {
+    hidden: {
+        opacity: 0,
+        y: -10,
+    },
+    display: {
+        opacity: 1,
+        y: 0,
+    },
+}
+
+...
+
+<motion.header
+    className="flex items-center justify-between py-2 px-1 sm:py-6 sm:px-12 border-t-4 border-red-500"
+    variants={headerVariants}
+    initial="hidden"
+    animate="display">
+   ...
+</motion.header>
+```
+
+Let's do the same with the `Hero.js` component. Except this time, we'll add an additional `transition` prop to each element with an incremental delay to make the animation stagger. Your final `Hero.js` component should look like this.
+
+```jsx
+import React from "react"
+import { Link } from "gatsby"
+import { MDXRenderer } from "gatsby-plugin-mdx"
+import { navLinks } from "../config/index"
+import { motion } from "framer-motion"
+
+const Hero = ({ content }) => {
+  const { frontmatter, body } = content[0].node
+  const { button } = navLinks
+
+  const variants = {
+    hidden: {
+      opacity: 0,
+      x: -10,
+    },
+    display: {
+      opacity: 1,
+      x: 0,
+    },
+  }
+
+  return (
+    <div className="flex items-center bg-pattern shadow-inner min-h-screen">
+      <div className="bg-white w-full py-6 shadow-lg">
+        <section class="mx-auto container w-4/5 sm:w-3/5">
+          <motion.h1
+            className="uppercase font-bold text-lg text-red-500"
+            variants={variants}
+            initial="hidden"
+            animate="display"
+            transition={{ delay: 0.6 }}
+          >
+            {frontmatter.intro}
+          </motion.h1>
+          <motion.h2
+            className="font-bold text-6xl"
+            variants={variants}
+            initial="hidden"
+            animate="display"
+            transition={{ delay: 0.8 }}
+          >
+            {frontmatter.title}
+          </motion.h2>
+          <motion.p
+            className="font-thin text-2xl sm:w-4/5"
+            variants={variants}
+            initial="hidden"
+            animate="display"
+            transition={{ delay: 1 }}
+          >
+            <MDXRenderer>{body}</MDXRenderer>
+          </motion.p>
+
+          <Link to={button.url}>
+            <motion.button
+              className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mt-6"
+              variants={variants}
+              initial="hidden"
+              animate="display"
+              transition={{ delay: 1.2 }}
+            >
+              {button.name}
+            </motion.button>
+          </Link>
+        </section>
+      </div>
+    </div>
+  )
+}
+
+export default Hero
+```
+
+# Deployment using Netlify
+
+We're nearly there. All that is left to do is push your finished project to GitHub, GitLab or BitBucket and deploy it. We're going to use Netlify to deploy our site. One of the advantages of using a Static Site Generator for your portfolio is that you can use a service like Netlify to host it.
+
+This brings a lot of benefits; not only is it extremely easy to use but it has continuous deployment setup automatically. So, if you ever make any changes to your site and push to your master branch - it will automatically update the production version for you.
+
+If you head over to [https://app.netlify.com/](https://app.netlify.com/) and choose "New site from git" you'll be asked to choose your git provider.
+
+The next page should be automatically populated with the correct information but just in case, it should read as:
+
+- Branch to deploy: "master"
+- Build command: "gatsby build"
+- Publish directory: public/
+
+Once you've done that click **deploy** and voila!
+
+# Summary
+
+Well congratulations for making it this far. You should now have made, completely from scratch, your very own portfolio site using Gatsby. You have covered all of the following functionality using Gatsby:
+
+- Installation and setting up
+- Configuring Tailwind CSS using PostCSS and Purge CSS
+- Building layouts
+- Creating helper functions
+- Querying with GraphQL and using the Gatsby GUI
+- Implementing MDX
+- Working with images in Gatsby
+- Making your site responsive using Tailwind CSS
+- Deploying using Netlify
+
+You have a basic scaffold from which you can go ahead and extend as you see fit. The full repository and [source code for this project is available here](https://github.com/daniel-norris/gatsby-tutorial).
+
+If you've found this tutorial helpful, then please let me know. You can connect with me on Twitter at [@danielpnorris](https://twitter.com/danielpnorris).
