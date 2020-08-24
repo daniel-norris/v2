@@ -4,3 +4,10 @@
 /* purgecss end ignore */
 
 @tailwind utilities;
+
+.prism-code {
+  overflow: scroll;
+  float: left;
+  min-width: 100%;
+  width: 40vw;
+}
