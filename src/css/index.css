@@ -6,8 +6,16 @@
 @tailwind utilities;
 
 .prism-code {
-  overflow: scroll;
+  overflow-x: scroll;
   float: left;
   min-width: 100%;
   width: 40vw;
+  margin-bottom: 2rem;
+}
+
+code {
+  background: #011627;
+  color: white;
+  padding: 1px;
+  border-radius: 4px;
 }

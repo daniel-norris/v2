@@ -5,11 +5,7 @@ published: true
 featured: true
 ---
 
-# How To Build A Portfolio Using Gatsby
-
-This article was originally posted on [www.danielnorris.co.uk](http://www.danielnorris.co.uk). You can connect with me on Twitter @[danielpnorris](https://twitter.com/danielpnorris).
-
-## Part 1
+[[Live Demo](https://gatsby-portfolio-how-to.netlify.app/)]
 
 Hey, welcome to this two part tutorial where I'll walk you through how to build your first portfolio with Gatsby, Tailwind CSS and Framer Motion.
 
@@ -19,31 +15,15 @@ Like with most things in tech, there is a lot of existing content out there on s
 
 A small caveat; I'm no expert but I have just gone through this very process building my own portfolio, which you can take a look at [here](http://www.danielnorris.co.uk), and blog and a large part of the writing process for me is improving my own understanding of a topic.
 
-### Why Gatsby?
+## Who is this for?
 
-There were three main reasons for me why I ended up choosing Gatsby compared to a many of the other Static Site Generators out there like Jekyll, Next.js, Hugo or even a SSG at all.
+This isn't a Gatsby starter, although you are welcome to use the GitHub repository as a starter for your own use. If you do, please star the repository. This tutorial is aimed at people who are interested in how to build their own Gatsby portfolio from scratch without the aid of a starter.
 
-- It's built on React
+## What will this cover?
 
-  You can leverage all the existing capability around component development React provides and bundle it with the added functionality that Gatsby provides.
+We'll cover the following:
 
-- A lot of configuration and tooling comes free
-
-  This was a huge draw for me. I wanted a solution for my portfolio that was quick to get off the ground and once completed, I could spent as little time as possible updating it or including a new blog post. The Developer experience is rather good and you get things like hot reloading and code splitting for free so you can spend less time on configuration and more on development.
-
-- The Gatsby ecosystem is really mature
-
-  There's a lot of useful information available to get you started which helps as a beginner. On top of that, the Gatsby plugin system makes common tasks like lazy-loading and image optimisation a quick and straight-forward process.
-
-I migrated my blog from Jekyll originally and haven't looked back. If you're wondering how Gatsby compares to other JAMstack solutions available and whether you should migrate, then you can find out more [here](https://www.gatsbyjs.com/features/jamstack/).
-
-### What are you going to build?
-
-There are a lot of starter templates that are accessible from the Gatsby website which enable you to get off the ground running with a ready-made blog or portfolio in a couple clicks. What that doesn't do is break down how it works and how you could make one yourself. If you're more interested in getting sh\*t done than how it works, then I recommend taking a look at the starters [here](https://www.gatsbyjs.com/starters/?v=2).
-
-We're going to build a basic portfolio site that looks like the one below. **INSERT IMAGE** We'll go through how to setup and configure your project to use Tailwind CSS, query and present MDX data sources using GraphQL, add transitions and animations using Framer and later deploy to Netlify.
-
-Part 1
+**Part 1**
 
 - Setting up
 - Configuring Tailwind CSS
@@ -61,7 +41,9 @@ Part 1
 - Deployment using Netlify
 - Summary
 
-Part 2
+<span className="text-gray-500">
+
+**Part 2**
 
 - Why a blog?
 - What are you going to build?
@@ -79,7 +61,33 @@ Part 2
 - Add Google analytics
 - Summary
 
-### Setting up
+</span>
+
+## Why Gatsby?
+
+There were three main reasons for me why I ended up choosing Gatsby compared to many of the other Static Site Generators out there like Jekyll, Next.js, Hugo or even a SSG at all.
+
+- **It's built on React**
+
+  You can leverage all the existing capability around component development React provides and bundle it with the added functionality that Gatsby provides.
+
+- **A lot of configuration and tooling comes free**
+
+  This was a huge draw for me. I wanted a solution for my portfolio that was quick to get off the ground and once completed, I could spent as little time as possible updating it or including a new blog post. The Developer experience is rather good and you get things like hot reloading and code splitting for free so you can spend less time on configuration and more on development.
+
+- **The Gatsby ecosystem is really mature**
+
+  There's a lot of useful information available to get you started which helps as a beginner. On top of that, the Gatsby plugin system makes common tasks like lazy-loading and image optimisation a quick and straight-forward process.
+
+I migrated my blog from Jekyll originally and haven't looked back. If you're wondering how Gatsby compares to other JAMstack solutions available and whether you should migrate, then you can find out more [here](https://www.gatsbyjs.com/features/jamstack/).
+
+## What are you going to build?
+
+There are a lot of starter templates that are accessible from the Gatsby website which enable you to get off the ground running with a ready-made blog or portfolio in a couple clicks. What that doesn't do is break down how it works and how you could make one yourself. If you're more interested in getting stuff done than how it works, then I recommend taking a look at the starters [here](https://www.gatsbyjs.com/starters/?v=2).
+
+We're going to build a basic portfolio site that looks like the one below above in the demo. We'll go through how to setup and configure your project to use Tailwind CSS, query and present MDX data sources using GraphQL, add transitions and animations using Framer and later deploy to Netlify.
+
+## Setting up
 
 Firstly, we're going to need to install npm and initialise a repository. The `-y` flag automatically accepts all the prompts during the npm wizard.
 
@@ -87,9 +95,9 @@ Firstly, we're going to need to install npm and initialise a repository. The `-y
 npm init -y && git init
 ```
 
-You'll want to exclude some of the project files from being commited to git. Include these files in the .gitignore file.
+You'll want to exclude some of the project files from being commited to git. Include these files in the `.gitignore` file.
 
-```bash
+```json
 // .gitignore
 
 .cache
@@ -105,9 +113,7 @@ npm i gatsby react react-dom
 
 Part of Gatsby's magic is that you are provided with routing for free. Any `.js` file that is created within `src/pages` is automatically generated with it's own url path.
 
-Lets go and create your first page. Create a `src/pages/index.js` file in your root directory. It should look like this:
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/91d017eb-73c4-42d9-a0ee-aa8967be2a78/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/91d017eb-73c4-42d9-a0ee-aa8967be2a78/Untitled.png)
+Lets go and create your first page. Create a `src/pages/index.js` file in your root directory.
 
 Create a basic component for now.
 
@@ -133,7 +139,7 @@ You can specify any port you want here or choose to omit this. I've chosen port 
 }
 ```
 
-You can run your project locally on your machine now from `[http://localhost:8000](http://localhost:8000)` with hot-reloading already baked in.
+You can run your project locally on your machine now from [http://localhost:8000](http://localhost:8000) with hot-reloading already baked in.
 
 ```bash
 npm run-script run
@@ -147,7 +153,7 @@ npm i -D prettier
 
 Create a `.prettierignore` and `prettier.config.js` file in your root directory.
 
-```bash
+```json
 // .prettierignore
 
 .cache
@@ -168,7 +174,7 @@ module.exports = {
 
 The ignore file selects which files to ignore and not format. The second config file imports an options object with settings including the width of tabs in spaces (tabWidth), whether to include semi-colons or not (semi) and whether to convert all quotes to single quotes (singleQuote).
 
-### Configuring Tailwind CSS
+# Configuring Tailwind CSS
 
 Let's now install and configure Tailwind. The second command initialises a configuration file which we'll talk about shortly.
 
@@ -178,7 +184,7 @@ npm i -D tailwindcss && npx tailwindcss init
 
 Now open the new `tailwind.config.js` file in your root directory and include the following options object.
 
-```bash
+```javascript
 // tailwind.config.js
 
 module.exports = {
@@ -195,17 +201,17 @@ The config file uses a glob and a Tailwind dependency called PurgeCSS to remove 
 
 Install the PostCSS plugin.
 
-```bash
+```shell
 npm i gatsby-plugin-postcss
 ```
 
 Create a `postcss.config.js` file in root and include the following.
 
-```bash
+```shell
 touch postcss.config.js
 ```
 
-```bash
+```javascript
 // postcss.config.js
 
 module.exports = () => ({
@@ -234,11 +240,9 @@ mkdir -p src/css
 touch src/css/index.css
 ```
 
-Then import the directives and include PurgeCSS's whitelist selectors for best practice.
+Then import the directives and include PurgeCSS's whitelist selectors in `index.css` for best practice.
 
 ```css
-// index.css
-
 /* purgecss start ignore */
 @tailwind base;
 @tailwind components;
@@ -249,7 +253,7 @@ Then import the directives and include PurgeCSS's whitelist selectors for best p
 
 Finally, create a `gatsby-browser.js` file in your root and import the styles.
 
-```css
+```javascript
 // gatsby-browser.js
 
 import "./src/css/index.css"
@@ -265,7 +269,7 @@ export default () => {
 }
 ```
 
-### Create site config file
+# Create site config file
 
 We're going to create a site config file. This isn't specific to Gatsby but enables us to create a single source of truth for all of the sites metadata and will help to minimise the amount of time you need to spend updating the site in the future.
 
@@ -331,7 +335,7 @@ module.exports = {
 }
 ```
 
-### Create layout component
+# Create layout component
 
 We're now going to create a layout component which will act as a wrapper for any further page content to the site.
 
@@ -382,7 +386,7 @@ export default () => {
 }
 ```
 
-### Create a header component
+# Create a header component
 
 Let's now create a sub component for the header at `src/components/Header.js` and some navigation links using our site config.
 
@@ -425,7 +429,7 @@ const Header = () => {
 export default Header
 ```
 
-We're used the Gatsby `Link` component to route internally and then iterated over our destructured config file to create our nav links and paths.
+We've used the Gatsby `Link` component to route internally and then iterated over our destructured config file to create our nav links and paths.
 
 Import your new Header component into Layout.
 
@@ -435,7 +439,7 @@ Import your new Header component into Layout.
 import Header from "../components/Header"
 ```
 
-### Create icon component and helper function
+# Create icon component and helper function
 
 Before we start on the footer, we're going to create an Icon component and helper function that will enable you to use a single class that accepts a name and color prop for all your svg icons.
 
@@ -460,7 +464,7 @@ const Icon = ({ name, color }) => {
 export default Icon
 ```
 
-We're using svg icons from [https://simpleicons.org/](https://simpleicons.org/). Copy the svg tag for a Github icon and include it in your Github icon sub component. Then do the same the remaining social media accounts you set up in your site config file.
+We're using svg icons from [https://simpleicons.org/](https://simpleicons.org/). Copy the svg tag for a Github icon and include it in your Github icon sub component. Then do the same for the remaining social media accounts you set up in your site config file.
 
 ```jsx
 import React from "react"
@@ -519,7 +523,7 @@ const Icon = ({ name, color }) => {
 export default Icon
 ```
 
-### Create footer component
+# Create footer component
 
 Lets now create our footer sub component. Create `src/components/Footer.js` and copy across:
 
@@ -547,7 +551,10 @@ Let's now iterate over our social media icons and use our new Icon component. Ad
 ```jsx
 import Icon from "../components/icons/index"
 import { socialMedia, siteShortTitle } from "../config/index"
-;<div className="flex">
+
+...
+
+<div className="flex">
   {socialMedia.map(({ name, url }, key) => {
     return (
       <a className="ml-8 w-6 h-6" href={url} key={key} alt={`${name} icon`}>
@@ -556,17 +563,17 @@ import { socialMedia, siteShortTitle } from "../config/index"
     )
   })}
 </div>
+
+...
 ```
 
-### Create a hero component
+# Create a hero component
 
 We're going to create a hero for your portfolio site now. In order to inject a bit of personality into this site, we're going to use a svg background from [http://www.heropatterns.com/](http://www.heropatterns.com/) called "Diagonal Lines". Feel free to choose anything you like.
 
 Let's extend our Tailwind CSS styles and add a new class.
 
 ```css
-// src/css/index.css
-
 .bg-pattern {
   background-color: #fff5f5;
   background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f56565' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
@@ -610,7 +617,7 @@ const Hero = ({ content }) => {
 export default Hero
 ```
 
-### Implement MDX into your site
+# Implement MDX into your site
 
 Thanks to Gatsby's use of GraphQL as a data management layer, you can incorporate a lot of different data sources into your site including various headless CMS's. We're going to use MDX for our portfolio.
 
@@ -627,16 +634,12 @@ mkdir -p src/content/hero
 touch src/content/hero/hero.mdx
 ```
 
-Let's add some content to this file.
+Let's add some content to the `hero.mdx` file.
 
-```markdown
-// hero.mdx
-
+```mdx
 ---
-
-intro: 'Hi, my name is'
-title: 'Dan Norris'
-
+intro: "Hi, my name is"
+title: "Dan Norris"
 ---
 
 I’m a Software Engineer based in Bristol, UK specialising in building incredible websites and applications.
@@ -644,25 +647,25 @@ I’m a Software Engineer based in Bristol, UK specialising in building incredib
 
 We'll need to configure these new plugins in our `gatsby-config.js` file. Add the following.
 
-```bash
+```javascript
 // gatsby-config.js
 
 module.exports = {
-    plugins: [
-        `gatsby-plugin-postcss`,
-        `gatsby-plugin-mdx`,
-        {
-            resolve: `gatsby-source-filesystem`,
-            options: {
-                name: `content`,
-                path: `${__dirname}/src/content`,
-            },
-        },
-    ],
+  plugins: [
+    `gatsby-plugin-postcss`,
+    `gatsby-plugin-mdx`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `content`,
+        path: `${__dirname}/src/content`,
+      },
+    },
+  ],
 }
 ```
 
-### Make your first GraphQL query
+# Make your first GraphQL query
 
 Now that we are able to use `.mdx` files, we need to create a query to access the data. Run your development server and go to [http://localhost:9090/\_\_\_graphql](http://localhost:9090/___graphql). Gatsby has a GUI that enables you to construct your data queries in the browser.
 
@@ -739,9 +742,9 @@ const Hero = ({ content }) => {
 export default Hero
 ```
 
-### Set up image plugins
+# Set up image plugins
 
-We're going to need to load an image for our about page, so we'll use Gatsby's built-in functionality. It provides lazy-loading, image optimisation and additional processing features like blur-up and svg outlining with minimal effort.
+We're going to need to load an image for our about page, so we'll use the `gatsby-image` to achieve this. It provides lazy-loading, image optimisation and additional processing features like blur-up and svg outlining with minimal effort.
 
 ```bash
 npm install gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image
@@ -749,7 +752,7 @@ npm install gatsby-transformer-sharp gatsby-plugin-sharp gatsby-image
 
 We need to include these new plugins into our config file.
 
-```bash
+```javascript
 // gatsby-config.js
 
 module.exports = {
@@ -759,7 +762,7 @@ module.exports = {
 
 We should now be able to query and import images using `gatsby-image` that are located in the `src/content/` folder that `gatsby-source-filesystem` is pointing at in your `gatsby-config.js` file. Let's try by making our about section.
 
-### Create an about component
+# Create an about component
 
 Let's start by creating a new mdx file for our content in `src/content/about/about.mdx`. I've used one of my images for the demo but you can use your own or download one here from [https://unsplash.com/](https://unsplash.com/). It needs to be placed into the same directory as your `about.mdx` file.
 
@@ -779,7 +782,7 @@ After deciding that I wanted to shift away from helping companies sell their tec
 In my free time you can find me rock climbing around local crags here in the UK and trying to tick off all the 4,000m peaks in the Alps.
 ```
 
-Now, let's extend our GraphQL query on our `index.js` page to include data for our about page. You'll also to import and use the new About component. Make these changes to your `index.js` file.
+Now, let's extend our GraphQL query on our `index.js` page to include data for our about page. You'll also need to import and use the new About component. Make these changes to your `index.js` file.
 
 ```jsx
 // index.js
@@ -860,9 +863,9 @@ const About = ({ content }) => {
 export default About
 ```
 
-You might have noticed that your `{body}` text isn't displaying properly and doesn't have any line breaks. If you used the default syntax for Markdown for things like `## Headings` then the same thing would happen; no styling would occur.
+You might have noticed that your `body` text isn't displaying properly and doesn't have any line breaks. If you used the default syntax for Markdown for things like `## Headings` then the same thing would happen; no styling would occur.
 
-Let's fix that now and import a component called `MDXProvider` which will allow us to define markdown elements. You could choose to link this up to already defined React components but we're just going to do it inline. Your `Layout.js` file should now look like this.
+Let's fix that now and import a component called `MDXProvider` which will allow us to define styling for markdown elements. You could choose to link this up to already defined React components but we're just going to do it inline. Your `Layout.js` file should now look like this.
 
 ```jsx
 import React from "react"
@@ -899,7 +902,7 @@ Layout.propTypes = {
 export default Layout
 ```
 
-### Create projects component
+# Create projects component
 
 Alrite, alrite, alrite. We are about halfway through.
 
@@ -1035,7 +1038,7 @@ export default ({ data }) => {
 }
 ```
 
-### Create a contact me component
+# Create a contact me component
 
 The final section requires us to build out a contact component. You could do this in a few ways but we're just going to include a button with a `mailto` link for now.
 
@@ -1120,15 +1123,13 @@ export default ({ data }) => {
 }
 ```
 
-### Making your portfolio responsive
+# Making your portfolio responsive
 
 If we inspect our site using Chrome `F12` then we can see that not all the content is optimised for mobile. The biggest problems appear to be images and spacing around the main sections. Luckily with Tailwind, setting styles for particular breakpoints takes little to no time at all. Let's do that now.
 
-If we take a look at the `Header.js` component we can see below that the nav bar is looking a bit cluttered. Ideally what we would do here is add a hamburger menu button but we're going to keep this simple and add some breakpoints.
+If we take a look at the `Header.js` component we can see that the nav bar is looking a bit cluttered. Ideally what we would do here is add a hamburger menu button but we're going to keep this simple and add some breakpoints and change the padding.
 
 Tailwind CSS has a number of default breakpoints that you can prefix before classes. They include `sm` (640px), `md` (768px), `lg` (1024px) and `xl` (1280px). It's a mobile-first framework and so if we set a base style, e.g. `sm:p-8` then it will apply padding to all breakpoints over 640px.
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bd46abe7-91aa-4aca-85ab-6b5e32f1a9da/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bd46abe7-91aa-4aca-85ab-6b5e32f1a9da/Untitled.png)
 
 Let's improve the header by applying some breakpoints.
 
@@ -1214,7 +1215,7 @@ const Project = ({ content }) => {
 export default Project
 ```
 
-Finally, contact component will look like this.
+Finally, your contact component should look something like this.
 
 ```jsx
 import React from "react"
@@ -1248,7 +1249,7 @@ const Contact = ({ content }) => {
 export default Contact
 ```
 
-### Using Framer Motion to animate your components
+# Using Framer Motion to animate your components
 
 Framer is an incredibly simple and straight forward way to animate your React projects. It's API is well documented and can be found [here](https://www.framer.com/api/motion/). Motion enables you to declaratively add animations and gestures to any html or svg element.
 
@@ -1283,7 +1284,7 @@ const headerVariants = {
 </motion.header>
 ```
 
-Let's do the same with the `Hero.js` component. Except this time, we'll add an additional `transition` prop to each element with an incremental delay to make the animate stagger. Your final `Hero.js` component should look like this.
+Let's do the same with the `Hero.js` component. Except this time, we'll add an additional `transition` prop to each element with an incremental delay to make the animation stagger. Your final `Hero.js` component should look like this.
 
 ```jsx
 import React from "react"
@@ -1359,15 +1360,13 @@ const Hero = ({ content }) => {
 export default Hero
 ```
 
-### Deployment using Netlify
+# Deployment using Netlify
 
 We're nearly there. All that is left to do is push your finished project to GitHub, GitLab or BitBucket and deploy it. We're going to use Netlify to deploy our site. One of the advantages of using a Static Site Generator for your portfolio is that you can use a service like Netlify to host it.
 
 This brings a lot of benefits; not only is it extremely easy to use but it has continuous deployment setup automatically. So, if you ever make any changes to your site and push to your master branch - it will automatically update the production version for you.
 
-If you head over to [https://app.netlify.com/](https://app.netlify.com/) and choose "New site from git" and you'll be faced with the options below. Choose your git provider.
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/73fa1ec2-17e0-4836-bb6b-a75323d1032b/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/73fa1ec2-17e0-4836-bb6b-a75323d1032b/Untitled.png)
+If you head over to [https://app.netlify.com/](https://app.netlify.com/) and choose "New site from git" you'll be asked to choose your git provider.
 
 The next page should be automatically populated with the correct information but just in case, it should read as:
 
@@ -1377,7 +1376,7 @@ The next page should be automatically populated with the correct information but
 
 Once you've done that click **deploy** and voila!
 
-### Summary
+# Summary
 
 Well congratulations for making it this far. You should now have made, completely from scratch, your very own portfolio site using Gatsby. You have covered all of the following functionality using Gatsby:
 
@@ -1391,4 +1390,6 @@ Well congratulations for making it this far. You should now have made, completel
 - Making your site responsive using Tailwind CSS
 - Deploying using Netlify
 
-You have a basic scaffold from which you can go ahead and extend as you see fit. If you've found this tutorial helpful, then please let me know. You can connect with me on Twitter at @danielpnorris.
+You have a basic scaffold from which you can go ahead and extend as you see fit. The full repository and [source code for this project is available here](https://github.com/daniel-norris/gatsby-tutorial).
+
+If you've found this tutorial helpful, then please let me know. You can connect with me on Twitter at [@danielpnorris](https://twitter.com/danielpnorris).
