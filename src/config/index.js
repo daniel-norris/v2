@@ -122,12 +122,12 @@ module.exports = {
       title: "CIO",
     },
     {
-      quote: "...definitely recommend Dan to everyone and work with him again.",
+      quote: "definitely recommend Dan to everyone",
       referee: "Maxwell A.",
       title: "Senior Business Analyst",
     },
     {
-      quote: "I would recommend and work with Dan again.",
+      quote: "would recommend and work with Dan again.",
       referee: "Michael Jeffrey",
       title: "Senior Software Engineer",
     },
