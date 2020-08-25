@@ -3,6 +3,18 @@ import { motion } from 'framer-motion';
 
 import { siteShortTitle } from '../config/index';
 
+const headerVariants = {
+    hidden: {
+      opacity: 0,
+      y: -10,
+    },
+    display: {
+      opacity: 1,
+      y: 0,
+    },
+  }
+
+
 const Logo = () => {
     return (
         <motion.div

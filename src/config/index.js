@@ -122,6 +122,16 @@ module.exports = {
       title: "CIO",
     },
     {
+      quote: "...definitely recommend Dan to everyone and work with him again.",
+      referee: "Maxwell A.",
+      title: "Senior Business Analyst",
+    },
+    {
+      quote: "I would recommend and work with Dan again.",
+      referee: "Michael Jeffrey",
+      title: "Senior Software Engineer",
+    },
+    {
       quote: "[his] programming skills were never in doubt.",
       referee: "Richard Stibbard",
       title: "Founder",
