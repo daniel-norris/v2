@@ -1,0 +1,1203 @@
+---
+title: How To Build A Portfolio Using Gatsby - Part 2
+date: 2020-09-06
+published: true
+featured: true
+cover: ./portfolio.jpg
+---
+
+[[Live Demo](https://gatsby-portfolio-how-to.netlify.app/)]
+
+Welcome to the second part of this two-part series on how to build your portfolio using Gatsby. Part 2 assumes you've gone through part 1, have built your portfolio and are now interested in taking a bit of a deeper dive into one way you could choose to build a blog with Gatsby using MDX.
+
+If not, then take a look at part 1 [here](https://www.danielnorris.co.uk/blog/posts/how-to-build-a-portfolio-using-gatsby/).
+
+# **Who is this for?**
+
+This isn't a Gatsby starter, although you are welcome to use the GitHub repository as a starter for your own use.
+
+If you do, please star the repository. This series is aimed at people who are interested in how to build their own Gatsby portfolio and blog from scratch without the aid of a starter.
+
+# **What will this cover?**
+
+We'll cover the following:
+
+**Part 2**
+
+- Why MDX?
+- What are you going to build?
+- Create a blog page
+- Configure the Gatsby `filesystem` plugin
+- Create your first MDX blog articles
+- Create slugs for your MDX blog posts
+- Programmatically create your MDX pages using the `createPages` API
+- Create a blog post template
+- Dynamically show article read times
+- Make an index of blog posts
+- Create a featured posts section
+- Customise your MDX components
+- Add syntax highlighting for code blocks
+- Add a featured image to blog posts
+- Add Google Analytics
+- Summary
+
+# Why MDX?
+
+One of the major features about Gatsby is your ability to source content from nearly anywhere. The combination of GraphQL and Gatsby's source plugin ecosystem means that you could pull data from a headless CMS, database, API, JSON or without GraphQL at all. All with minimal configuration needed.
+
+MDX enables you to write JSX into your Markdown. This allows you to write long-form content and re-use your React components like charts for instance to create some really engaging content for your users. I've included a quick example below using MDX in this article.
+
+```jsx
+## This is Markdown
+
+<div style={{ padding: '20px', backgroundColor: 'skyblue' }}>
+  <h3>This is JSX</h3>
+</div>
+```
+
+## This is Markdown
+
+<div style={{ padding: "20px", backgroundColor: "skyblue" }}>
+  <h3>This is JSX</h3>
+</div>
+
+# What are you going to build?
+
+There are a lot of starter templates that are accessible from the Gatsby website which enable you to get off the ground running with a ready-made blog or portfolio in a couple clicks. What that doesn't do is break down how it works and how you could make one yourself. If you're more interested in getting stuff done than how it works, then I recommend taking a look at the starters [here](https://www.gatsbyjs.com/starters/?v=2).
+
+You will have already created a basic portfolio in part 1 similar to the demo site available above. We're now going to create a blog for our portfolio that is programmatically created from MDX using GraphQL. We'll separate our blog into components; one section to display our featured articles and another to display an index of all of our articles. Then we'll add syntax highlighting for code blocks, read times for our users, a cover image for each post and Google Analytics.
+
+# Create a blog page
+
+Gatsby makes it incredibly easy to implement routing into your site. Any `.js` file found within `src/pages` will automatically generate its own page and the path for that page will match the file structure it's found in.
+
+We're going to create a new `blog.js` page that will display a list of featured blog articles and a complete list of all of our blog articles.
+
+```bash
+touch src/pages/blog.js
+```
+
+Let's now import our `Layout.js` component we created in part 1 and enter some placeholder content for now.
+
+```jsx
+import React from "react"
+import Layout from "../components/Layout"
+
+export default ({ data }) => {
+  return (
+    <Layout>
+      <h1>Blog</h1>
+      <p>Our blog articles will go here!</p>
+    </Layout>
+  )
+}
+```
+
+If you now navigate to [http://localhost:9090/blog](http://localhost:9090/blog) you'll be able to see your new blog page.
+
+# Configure the Gatsby `filesystem` plugin
+
+We want to colocate all of our long-form content together with their own assets, e.g. images, then we want to place them into a folder like `src/content/posts`. This isn't the `src/pages` directory we used early so we'll need to do a bit of extra work in order to dynamically generate our blog pages. We'll use Gatsby's `createPages` API to do this shortly.
+
+Firstly, we need to configure the `gatsby-source-filesystem` plugin so that Gatsby knows where to source our MDX blog articles from. You should already have the plugin installed so let's configure it now. We'll add the location to our `gatsby-config.js` file.
+
+```jsx
+...
+
+{
+    resolve: `gatsby-source-filesystem`,
+    options: {
+        name: `posts`,
+        path: `${__dirname}/src/content/posts`,
+    },
+},
+
+...
+```
+
+Your full file should look something like this:
+
+```jsx
+module.exports = {
+  plugins: [
+    `gatsby-plugin-postcss`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-mdx`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `content`,
+        path: `${__dirname}/src/content`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/content/posts`,
+      },
+    },
+  ],
+}
+```
+
+# Create your first MDX blog articles
+
+Let's create several dummy articles for now. We'll create quite a few so that we can differentiate some of them into featured articles to display on our home page. There's a quick way to do that:
+
+```bash
+mkdir -p src/content/posts
+touch src/content/posts/blog-{1,2,3}.mdx
+```
+
+We're adding a lot of additional `frontmatter` now which we will use at a later date. For the time being, leave the `cover` property empty.
+
+`Frontmatter` is just metadata for your MDX. You can inject them later into your components using a GraphQL query and are just basic YAML. They need to be at the top of the file and between triple dashes.
+
+```yaml
+---
+title: Blog 1
+subtitle: Blogging with MDX and Gatsby
+date: 2020-08-18
+published: true
+featured: true
+cover: ""
+---
+Sail ho rope's end bilge rat Chain Shot tack scuppers cutlass fathom case shot bilge jolly boat quarter ahoy gangplank coffer. Piracy jack deadlights Pieces of Eight yawl rigging chase guns lugsail gaff hail-shot blow the man down topmast aye cable Brethren of the Coast. Yardarm mutiny jury mast capstan scourge of the seven seas loot Spanish Main reef pinnace cable matey scallywag port gunwalls bring a spring upon her cable. Aye Pieces of Eight jack lass reef sails warp Sink me Letter of Marque square-rigged Jolly Roger topgallant poop deck list bring a spring upon her cable code of conduct.
+
+Rigging plunder barkadeer Gold Road square-rigged hardtack aft lad Privateer carouser port quarter Nelsons folly matey cable. Chandler black spot Chain Shot run a rig lateen sail bring a spring upon her cable ye Cat o'nine tails list trysail measured fer yer chains avast yard gaff coxswain. Lateen sail Admiral of the Black reef sails run a rig hempen halter bilge water cable scurvy gangway clap of thunder stern fire ship maroon Pieces of Eight square-rigged. Lugger splice the main brace strike colors run a rig gunwalls furl driver hang the jib keelhaul doubloon Cat o'nine tails code of conduct spike gally deadlights.
+
+Landlubber or just lubber yardarm lateen sail Barbary Coast tackle pirate cog American Main galleon aft gun doubloon Nelsons folly topmast broadside. Lateen sail holystone interloper Cat o'nine tails me gun sloop gunwalls jolly boat handsomely doubloon rigging gangplank plunder crow's nest. Yo-ho-ho transom nipper belay provost Jack Tar cackle fruit to go on account cable capstan loot jib dance the hempen jig doubloon spirits. Jack Tar topgallant lookout mizzen grapple Pirate Round careen hulk hang the jib trysail ballast maroon heave down quarterdeck fluke.
+```
+
+Now do the same thing for the other two blog articles we've created.
+
+# Create slugs for your MDX blog posts
+
+We now need to create slugs for each of our blog posts. We could do this manually by including a URL or path property to each of our blog posts `frontmatter` but we're going to set up our blog so that the paths are generated dynamically for us. We'll be using Gatsby's `onCreateNode` API for this.
+
+Create a `gatsby-node.js` file in your root directory. This file is one of four main files that you can optionally choose to include in a Gatsby root directory that enables you to configure your site and control its behaviour. We've already used the `gatsby-browser.js` file to import Tailwind CSS directives and `gatsby-config.js` to control what plugins we are importing.
+
+```bash
+touch gatsby-node.js
+```
+
+Now copy the following into your `gatsby-node.js` file. This uses a helper function called `createFilePath` from the `gatsby-source-filesystem` plugin to provide the value of each of your `.mdx` blog post's file paths. The Gatsby `onCreateNode` API is then used to create a new GraphQL node with the key of `slug` and value of blog posts path, prefixed with anything you like - in this case its `/blog`.
+
+```jsx
+const { createFilePath } = require("gatsby-source-filesystem")
+
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
+
+  // only applies to mdx nodes
+  if (node.internal.type === "Mdx") {
+    const value = createFilePath({ node, getNode })
+
+    createNodeField({
+      // we're called the new node field 'slug'
+      name: "slug",
+      node,
+      // you don't need a trailing / after blog as createFilePath will do this for you
+      value: `/blog${value}`,
+    })
+  }
+}
+```
+
+If you want to find out more about the `gatsby-source-filesystem` plugin then take a look at [this](https://www.gatsbyjs.com/plugins/gatsby-source-filesystem/). Further information the `onCreateNode` API can be found [here](https://www.gatsbyjs.com/docs/node-apis/#onCreateNode).
+
+# Programmatically create your MDX pages using the `createPages` API
+
+We're going to re-use some boilerplate from the Gatsby docs now and add the following code below to what we have already included in the previous section. This gets added to all of the existing node in the `gatsby-node.js` file. This uses the `slug` we created in the earlier section and Gatsby's `createPages` API to create pages for all of your `.mdx` files and wraps it in a template.
+
+```jsx
+const path = require("path")
+
+exports.createPages = async ({ graphql, actions, reporter }) => {
+  // Destructure the createPage function from the actions object
+  const { createPage } = actions
+
+  const result = await graphql(`
+    query {
+      allMdx {
+        edges {
+          node {
+            id
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  // Create blog post pages.
+  const posts = result.data.allMdx.edges
+
+  // you'll call `createPage` for each result
+  posts.forEach(({ node }, index) => {
+    createPage({
+      // This is the slug you created before
+      path: node.fields.slug,
+      // This component will wrap our MDX content
+      component: path.resolve(`./src/templates/blogPost.js`),
+      // You can use the values in this context in
+      // our page layout component
+      context: { id: node.id },
+    })
+  })
+}
+```
+
+If you try and restart your development server, you'll receive an error to stay that your `blogPost.js` component doesn't exist. Let's create a template now to display all your blog posts.
+
+# Create a blog post template
+
+Let's firstly create a new `blogPost.js` template file.
+
+```bash
+touch src/templates/blogPost.js
+```
+
+Let's populate the template with some basic data such as title, date and body. We'll be dynamically adding read time, cover images and syntax highlighting shortly.
+
+```jsx
+import { MDXRenderer } from "gatsby-plugin-mdx"
+import React from "react"
+import Layout from "../components/layout"
+
+export default ({ data }) => {
+  const { frontmatter, body } = data.mdx
+
+  return (
+    <Layout>
+      <section
+        className="w-2/4 my-8 mx-auto container"
+        style={{ minHeight: "80vh" }}
+      >
+        <h1 className="text-3xl sm:text-5xl font-bold">{frontmatter.title}</h1>
+        <div className="flex justify-between">
+          <p className="text-base text-gray-600">{frontmatter.date}</p>
+        </div>
+
+        <div className="mt-8 text-base font-light">
+          <MDXRenderer>{body}</MDXRenderer>
+        </div>
+      </section>
+    </Layout>
+  )
+}
+```
+
+Now we need to create a GraphQL query to populate the fields above.
+
+```jsx
+export const pageQuery = graphql`
+  query BlogPostQuery($id: String) {
+    mdx(id: { eq: $id }) {
+      id
+      body
+      timeToRead
+      frontmatter {
+        title
+        date(formatString: "Do MMM YYYY")
+      }
+    }
+  }
+`
+```
+
+We're passing an argument to this GraphQL query called `$id` here where we have made a type declaration that it is a `String`. We've passed this from the `context` object after using the `createPage` API in `gatsby-node.js` in the earlier section. Then we have filtered our GraphQL query to only return results that equal that `$id` variable.
+
+If you now navigate to the url's below, each of your blog posts should now be working:
+
+- Blog 1 ⇒ [http://localhost:9090/blog/posts/blog-1/](http://localhost:9090/blog/posts/blog-1/)
+- Blog 2 ⇒ [http://localhost:9090/blog/posts/blog-2/](http://localhost:9090/blog/posts/blog-1/)
+- Blog 3 ⇒ [http://localhost:9090/blog/posts/blog-3/](http://localhost:9090/blog/posts/blog-1/)
+
+# Dynamically show article read times
+
+Let's start to add a few more features to our blog post template. Something that you may regularly see on technical posts is the estimated time it takes to read the article. A great example of this on Dan Abramov's blog [overreacted.io](https://overreacted.io/).
+
+There's an incredibly easy way to add this feature to your blog using Gatsby and GraphQL and it doesn't require you to write a function to calculate the length of your blog post. Let's add it now. Go back to your `blogPost.js` file and update your GraphQL query to also include the `timeToRead` property.
+
+```jsx
+export const pageQuery = graphql`
+  query BlogPostQuery($id: String) {
+    mdx(id: { eq: $id }) {
+      id
+      body
+      timeToRead
+      frontmatter {
+        title
+        date(formatString: "Do MMM YYYY")
+      }
+    }
+  }
+`
+```
+
+Now pass it as a prop and include it as an expression in your `blogPost.js` template.
+
+```jsx
+export default ({ data }) => {
+	const { frontmatter, body, timeToRead } = data.mdx
+	...
+	<p className="text-base text-gray-600">{timeToRead} min read</p>
+	...
+}
+```
+
+If you refresh your development server, the read time for each particular blog post should now appear. Unless you included your own blog text, they should all read "1 min read" but try experimenting with longer articles and see it dynamically change.
+
+# Make an index of blog posts
+
+Our blog page is still looking a bit bare. Let's now populate it with a full list of all our blog posts. Let's firstly create a heading.
+
+```jsx
+import React from "react"
+import Layout from "../components/Layout"
+
+const Blog = ({ data }) => {
+  return (
+    <Layout>
+      <section
+        className="w-3/5 mx-auto container mt-6 flex flex-col justify-center"
+        style={{ minHeight: "60vh" }}
+      >
+        <h1 className="text-3xl sm:text-5xl font-bold mb-6">Blog</h1>
+        <p className="font-light text-base sm:text-lg">
+          Arr aft topsail deadlights ho snow mutiny bowsprit long boat draft
+          crow's nest strike colors bounty lad ballast.
+        </p>
+      </section>
+      <p>List of blog articles goes here.</p>
+    </Layout>
+  )
+}
+
+export default Blog
+```
+
+Now let's create a GraphQL query that will return all `.mdx` files that have a file path that includes `posts/` and has a frontmatter property where the `published` value equals `true`.
+
+We then want to sort the query in descending order so that the most recent article is displayed first. We can the pass this as a prop to a `Post` sub component we will create shortly, similar to what we have done with the `Hero`, `About` and other sub components we made in part 1.
+
+```jsx
+export const query = graphql`
+  {
+    posts: allMdx(
+      filter: {
+        fileAbsolutePath: { regex: "/posts/" }
+        frontmatter: { published: { eq: true } }
+      }
+      sort: { order: DESC, fields: frontmatter___date }
+    ) {
+      edges {
+        node {
+          fields {
+            slug
+          }
+          body
+          timeToRead
+          frontmatter {
+            title
+            date(formatString: "Do MMM")
+          }
+          id
+          excerpt(pruneLength: 100)
+        }
+      }
+    }
+  }
+`
+```
+
+Let's now create a new `Post.js` sub component.
+
+```bash
+touch src/components/Post.js
+```
+
+We can now iterate over the content prop in `Post.js` and create a list of all of our blog articles.
+
+```bash
+import React from 'react'
+import { Link } from 'gatsby'
+
+const Posts = ({ content }) => {
+    return (
+        <section
+            id="blog"
+            className="mt-6 flex flex-col mx-auto container w-3/5"
+            style={{ marginBottom: '10rem' }}
+        >
+            <h3 className="text-3xl sm:text-5xl font-bold mb-6">All Posts</h3>
+
+            {content.map((posts, key) => {
+                const {
+                    excerpt,
+                    id,
+                    body,
+                    frontmatter,
+                    timeToRead,
+                    fields,
+                } = posts.node
+
+                return (
+                    <Link to={fields.slug}>
+                        <section
+                            className="flex items-center justify-between mt-8"
+                            key={id}
+                        >
+                            <div>
+                                <p className="text-xs sm:text-sm font-bold text-gray-500">
+                                    {frontmatter.date}
+                                    <span className="sm:hidden">
+                                        {' '}
+                                        &bull; {timeToRead} min read
+                                    </span>
+                                </p>
+                                <h1 className="text-lg sm:text-2xl font-bold">
+                                    {frontmatter.title}
+                                </h1>
+                                <p className="text-sm sm:text-lg font-light">
+                                    {excerpt}
+                                </p>
+                            </div>
+                            <p className="hidden sm:block text-sm font-bold text-gray-500">
+                                {timeToRead} min read
+                            </p>
+                        </section>
+                    </Link>
+                )
+            })}
+        </section>
+    )
+}
+
+export default Posts
+```
+
+Let's now go back to `blog.js` and replace the `<p>` element with the `Post.js` sub component and pass it the data object.
+
+```jsx
+import React from "react"
+import { graphql, Link } from "gatsby"
+import Layout from "../components/Layout"
+import Post from "../components/Post"
+
+const Blog = ({ data }) => {
+  return (
+    <Layout>
+      <section
+        className="w-3/5 mx-auto container mt-6 flex flex-col justify-center"
+        style={{ minHeight: "60vh" }}
+      >
+        <h1 className="text-3xl sm:text-5xl font-bold mb-6">Blog</h1>
+        <p className="font-light text-base sm:text-lg">
+          Arr aft topsail deadlights ho snow mutiny bowsprit long boat draft
+          crow's nest strike colors bounty lad ballast.
+        </p>
+      </section>
+      <Post content={data.posts.edges} />
+    </Layout>
+  )
+}
+
+export default Blog
+
+export const query = graphql`
+  {
+    posts: allMdx(
+      filter: {
+        fileAbsolutePath: { regex: "/posts/" }
+        frontmatter: { published: { eq: true } }
+      }
+      sort: { order: DESC, fields: frontmatter___date }
+    ) {
+      edges {
+        node {
+          fields {
+            slug
+          }
+          body
+          timeToRead
+          frontmatter {
+            title
+            date(formatString: "Do MMM")
+          }
+          id
+          excerpt(pruneLength: 100)
+        }
+      }
+    }
+  }
+`
+```
+
+If you navigate to [http://localhost:9090/blog](http://localhost:9090/blog) you should now see a list of all your available blog articles in descending order. Choosing whether you want to publicly display a blog article is as easy as changing the boolean value of published to `false` on that particular article's `frontmatter`.
+
+# Create a featured posts section
+
+We're going to create a featured posts section. Firstly, we'll create a new GraphQL query that enables us to filter only the posts that have a truthy `featured` frontmatter value.
+
+Let's create that now and add it to our `blog.js` file.
+
+```jsx
+...
+    featured: allMdx(
+                filter: {
+                    fileAbsolutePath: { regex: "/posts/" }
+                    frontmatter: { published: { eq: true }, featured: { eq: true } }
+                }
+                sort: { order: DESC, fields: frontmatter___date }
+            ) {
+                edges {
+                    node {
+                        fields {
+                            slug
+                        }
+                        frontmatter {
+                            date(formatString: "Do MMM")
+                            title
+                        }
+                        excerpt(pruneLength: 100)
+                        id
+                        body
+                        timeToRead
+                    }
+                }
+            }
+...
+```
+
+Now, let's create a `FeaturedPosts.js` component.
+
+```jsx
+import React from "react"
+import { Link } from "gatsby"
+
+const FeaturedPosts = ({ content }) => {
+  return (
+    <section className="my-6 flex flex-col mx-auto container w-3/5">
+      <h3 className="text-3xl sm:text-5xl font-bold mb-6">Featured Posts</h3>
+
+      {content.map((featured, key) => {
+        const {
+          excerpt,
+          id,
+          body,
+          frontmatter,
+          timeToRead,
+          fields,
+        } = featured.node
+
+        return (
+          <Link to={fields.slug}>
+            <section
+              className="flex items-center justify-between mt-8"
+              key={id}
+            >
+              <div>
+                <p className="text-xs sm:text-sm font-bold text-gray-500">
+                  {frontmatter.date}
+                  <span className="sm:hidden">
+                    {" "}
+                    &bull; {timeToRead} min read
+                  </span>
+                </p>
+                <h1 className="text-lg sm:text-2xl font-bold">
+                  {frontmatter.title}
+                </h1>
+                <p className="text-sm sm:text-lg font-light">{excerpt}</p>
+              </div>
+              <p className="hidden sm:block text-sm font-bold text-gray-500">
+                {timeToRead} min read
+              </p>
+            </section>
+          </Link>
+        )
+      })}
+    </section>
+  )
+}
+
+export default FeaturedPosts
+```
+
+Let's now import the new component into `blog.js`.
+
+```jsx
+...
+	const Blog = ({ data }) => {
+	    return (
+	        <Layout>
+	            <section
+	                className="w-3/5 mx-auto container mt-6 flex flex-col justify-center"
+	                style={{ minHeight: '60vh' }}
+	            >
+	                <h1 className="text-3xl sm:text-5xl font-bold mb-6">Blog</h1>
+	                <p className="font-light text-base sm:text-lg">
+	                    Arr aft topsail deadlights ho snow mutiny bowsprit long boat
+	                    draft crow's nest strike colors bounty lad ballast.
+	                </p>
+	            </section>
+	            <FeaturedPost cta={false} content={data.featured.edges} />
+	            <Post content={data.posts.edges} />
+	        </Layout>
+	    )
+	}
+...
+```
+
+Let's now re-use the `FeaturedPosts.js` component in our `index.js` page. You'll need to use the same GraphQL query again and pass it as a prop.
+
+```jsx
+...
+	export default ({ data }) => {
+	    return (
+	        <Layout>
+	            <Hero content={data.hero.edges} />
+	            <About content={data.about.edges} />
+	            <Project content={data.project.edges} />
+	            <FeaturedPosts content={data.featured.edges} />
+	            <Contact content={data.contact.edges} />
+	        </Layout>
+	    )
+	}
+...
+
+	featured: allMdx(
+	            filter: {
+	                fileAbsolutePath: { regex: "/posts/" }
+	                frontmatter: { published: { eq: true }, featured: { eq: true } }
+	            }
+	            sort: { order: DESC, fields: frontmatter___date }
+	        ) {
+	            edges {
+	                node {
+	                    fields {
+	                        slug
+	                    }
+	                    frontmatter {
+	                        date(formatString: "Do MMM")
+	                        title
+	                    }
+	                    excerpt(pruneLength: 100)
+	                    id
+	                    body
+	                    timeToRead
+	                }
+	            }
+	        }
+...
+```
+
+Let's add a call to action button for users who want to see the rest of our blog articles. We'll include this in our `FeaturedPosts.js` component and pass in a `boolean` prop to determine if we want to display the button or not.
+
+```jsx
+import React from 'react'
+import { Link } from 'gatsby'
+
+const FeaturedPosts = ({ content, cta = true }) => {
+    return (
+       ...
+            {!cta ? null : (
+                <Link to="/blog" className="flex justify-center">
+                    <button className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 border-b-4 border-red-700 hover:border-red-500 rounded mt-6">
+                        See More
+                    </button>
+                </Link>
+            )}
+				...
+    )
+}
+
+export default FeaturedPosts
+```
+
+Why don't we also double-check our GraphQL query is correctly displaying only the articles with a truthy `featured` frontmatter value. So, let's edit one of our blog articles, so that it does not display. Let's edit `blog-1.mdx`.
+
+```jsx
+---
+title: Blog 1
+subtitle: Blogging with MDX and Gatsby
+date: 2020-08-18
+published: true
+featured: false
+cover: ''
+---
+
+...
+```
+
+If you now navigate to [http://localhost:9090/](http://localhost:9090/) you'll see a featured posts section with just two articles displaying. When you navigate to [http://localhost:9090](http://localhost:9090/)/blog you should now see a header, featured posts with two articles and all posts component displaying an index of all articles.
+
+# Customise your MDX components
+
+You may have noticed that we are having the same problem we encountered in part 1 with the markdown we are writing in our `.mdx` files. No styling is being applied. We could fix this by introducing some markup and include inline styles or Tailwind class names but we want to minimise the amount of time we need to spend writing a blog post.
+
+So we'll re-iterate the process we used in part 1 and use the `MDXProvider` component to define styling manually for each markdown component.
+
+```jsx
+import { MDXRenderer } from "gatsby-plugin-mdx"
+import { MDXProvider } from "@mdx-js/react"
+import React from "react"
+import Layout from "../components/Layout"
+
+export default ({ data }) => {
+  const { frontmatter, body, timeToRead } = data.mdx
+
+  return (
+    <MDXProvider
+      components={{
+        p: props => <p {...props} className="text-sm font-light mb-4" />,
+        h1: props => (
+          <h1 {...props} className="text-2xl font-bold mb-4 mt-10" />
+        ),
+        h2: props => <h2 {...props} className="text-xl font-bold mb-4 mt-8" />,
+        h3: props => <h3 {...props} className="text-lg font-bold mb-4 mt-8" />,
+        strong: props => (
+          <strong
+            {...props}
+            className="font-bold"
+            style={{ display: "inline" }}
+          />
+        ),
+        a: props => (
+          <a
+            {...props}
+            className="font-bold text-red-500 hover:underline cursor-pointer"
+            style={{ display: "inline" }}
+          />
+        ),
+        ul: props => (
+          <ul {...props} className="list-disc font-light ml-8 mb-4" />
+        ),
+        blockquote: props => (
+          <div
+            {...props}
+            role="alert"
+            className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 ml-4 mb-4"
+          />
+        ),
+      }}
+    >
+      <Layout>
+        <section
+          className="w-2/4 my-8 mx-auto container"
+          style={{ minHeight: "80vh" }}
+        >
+          <h1 className="text-3xl sm:text-5xl font-bold">
+            {frontmatter.title}
+          </h1>
+          <div className="flex justify-between">
+            <p className="text-base text-gray-600">{frontmatter.date}</p>
+            <p className="text-base text-gray-600">{timeToRead} min read</p>
+          </div>
+          <div className="mt-8 text-base font-light">
+            <MDXRenderer>{body}</MDXRenderer>
+          </div>
+        </section>
+      </Layout>
+    </MDXProvider>
+  )
+}
+
+export const pageQuery = graphql`
+  query BlogPostQuery($id: String) {
+    mdx(id: { eq: $id }) {
+      id
+      body
+      timeToRead
+      frontmatter {
+        title
+        date(formatString: "Do MMM YYYY")
+      }
+    }
+  }
+`
+```
+
+Now when you create a new blog post and write the long-form content using Markdown, the elements you've used will now display appropriately.
+
+# Add syntax highlighting for code blocks
+
+I'm trying to regularly use my blog to write technical articles and so I found adding syntax highlighting to code blocks made reading my articles a better experience for my users.
+
+The process is a little involved but we'll try and break it down as best as possible. Firstly, we need to use the `gatsby-browser.js` API file to wrap our entire site with a plugin called `prism-react-renderer` that will enable us to use syntax highlighting on our code blocks in MDX.
+
+Let's install the plugin firstly.
+
+```bash
+npm i prism-react-renderer
+```
+
+Now let's add in some boilerplate for the `gatsby-browser.js` file, for more information check out the API docs [here](https://www.gatsbyjs.com/docs/browser-apis/#wrapRootElement).
+
+```jsx
+...
+
+import React from 'react'
+import { MDXProvider } from '@mdx-js/react'
+import Highlight, { defaultProps } from 'prism-react-renderer'
+
+const components = {
+		...
+}
+
+export const wrapRootElement = ({ element }) => {
+    return <MDXProvider components={components}>{element}</MDXProvider>
+}
+```
+
+We've called the `wrapRootElement` function and returned our Gatsby site wrapped by `MDXProvider`. We're using the components prop and will be shortly passing a variable called `components` which will define a `Highlight` component imported form `prism-react-renderer`. This `MDXProvider` pattern is commonly known as a shortcode, you can find out more in the Gatsby docs [here](https://www.gatsbyjs.com/docs/mdx/importing-and-using-components/).
+
+If we navigate to the GitHub repository for the plugin, we're going to copy some of the example code and then make it fit for purpose for our blog. You can find the repository [here](https://github.com/FormidableLabs/prism-react-renderer).
+
+```jsx
+...
+
+import React from 'react'
+import { MDXProvider } from '@mdx-js/react'
+import Highlight, { defaultProps } from 'prism-react-renderer'
+
+const components = {
+		pre: (props) => {
+				return (
+						<Highlight {...defaultProps} code={exampleCode} language="jsx">
+					    {({ className, style, tokens, getLineProps, getTokenProps }) => (
+					      <pre className={className} style={style}>
+					        {tokens.map((line, i) => (
+					          <div {...getLineProps({ line, key: i })}>
+					            {line.map((token, key) => (
+					              <span {...getTokenProps({ token, key })} />
+					            ))}
+					          </div>
+					        ))}
+					      </pre>
+					    )}
+					  </Highlight>,
+				)
+		}
+}
+
+export const wrapRootElement = ({ element }) => {
+    return <MDXProvider components={components}>{element}</MDXProvider>
+}
+```
+
+At the moment, the code block language is hard coded and we need to replace the `exampleCode` variable with the actual code we want to be highlighted. Let's do that now.
+
+```jsx
+...
+        const components = {
+        pre: (props) => {
+            const className = props.children.props.className || ''
+            const matches = className.match(/language-(?<lang>.*)/)
+
+            return (
+                <Highlight
+                    {...defaultProps}
+                    code={props.children.props.children.trim()}
+                    language={
+                        matches && matches.groups && matches.groups.lang
+                            ? matches.groups.lang
+                            : ''
+                    }
+                >
+                    {({
+                        className,
+                        style,
+                        tokens,
+                        getLineProps,
+                        getTokenProps,
+                    }) => (
+                        <pre className={className} style={style}>
+                            {tokens.map((line, i) => (
+                                <div {...getLineProps({ line, key: i })}>
+                                    {line.map((token, key) => (
+                                        <span {...getTokenProps({ token, key })} />
+                                    ))}
+                                </div>
+                            ))}
+                        </pre>
+                    )}
+                </Highlight>
+            )
+        },
+    }
+...
+```
+
+If you now edit one of your `.mdx` blog posts and include a code block using Markdown syntax, it should now be highlighted using `prism-react-renderer`'s default theme.
+
+The padding is a little off, so let's fix that now.
+
+```jsx
+...
+    <pre className={`${className} p-4 rounded`} style={style}>
+        {tokens.map((line, i) => (
+            <div {...getLineProps({ line, key: i })}>
+                {line.map((token, key) => (
+                    <span {...getTokenProps({ token, key })} />
+                ))}
+            </div>
+        ))}
+    </pre>
+...
+```
+
+If you want to change the default theme, you can import it from `prism-react-renderer` and pass it as a prop to the `Highlight` component. You can find more themes [here](https://github.com/PrismJS/prism-themes). I've decided to use the `vsDark` theme in our example. Your final `gatsby-browser.js` should look something like this.
+
+```jsx
+import "./src/css/index.css"
+import React from "react"
+import { MDXProvider } from "@mdx-js/react"
+import theme from "prism-react-renderer/themes/vsDark"
+import Highlight, { defaultProps } from "prism-react-renderer"
+
+const components = {
+  pre: props => {
+    const className = props.children.props.className || ""
+    const matches = className.match(/language-(?<lang>.*)/)
+
+    return (
+      <Highlight
+        {...defaultProps}
+        code={props.children.props.children.trim()}
+        language={
+          matches && matches.groups && matches.groups.lang
+            ? matches.groups.lang
+            : ""
+        }
+        theme={theme}
+      >
+        {({ className, style, tokens, getLineProps, getTokenProps }) => (
+          <pre className={`${className} p-4 rounded`} style={style}>
+            {tokens.map((line, i) => (
+              <div {...getLineProps({ line, key: i })}>
+                {line.map((token, key) => (
+                  <span {...getTokenProps({ token, key })} />
+                ))}
+              </div>
+            ))}
+          </pre>
+        )}
+      </Highlight>
+    )
+  },
+}
+
+export const wrapRootElement = ({ element }) => {
+  return <MDXProvider components={components}>{element}</MDXProvider>
+}
+```
+
+# Add a featured image to blog posts
+
+One of the last things we're going to do is provide the opportunity to add a featured image to each of our blog posts.
+
+Let's firstly install a number of packages we're going to need.
+
+```jsx
+npm i gatsby-transformer-sharp gatsby-plugin-sharp gatsby-remark-images gatsby-image
+```
+
+Now we need to configure the plugins, let's update our `gatsby-config.js` file with the following:
+
+```jsx
+...
+    {
+        resolve: `gatsby-plugin-mdx`,
+        options: {
+            extensions: [`.mdx`, `.md`],
+            gatsbyRemarkPlugins: [
+                {
+                    resolve: `gatsby-remark-images`,
+                },
+            ],
+            plugins: [
+                {
+                    resolve: `gatsby-remark-images`,
+                },
+            ],
+        },
+    },
+...
+```
+
+We now need to update our GraphQL query on `blogPost.js` so that it returns the image we'll be including in our blog posts frontmatter shortly. We're using a query fragment here to return a traced SVG image while our image is lazy-loading. More information on query fragment's and the Gatsby image API can be found [here](https://www.gatsbyjs.com/docs/gatsby-image/#about-tracedsvg).
+
+```jsx
+export const pageQuery = graphql`
+  query BlogPostQuery($id: String) {
+    mdx(id: { eq: $id }) {
+      id
+      body
+      timeToRead
+      frontmatter {
+        title
+        date(formatString: "Do MMM YYYY")
+        cover {
+          childImageSharp {
+            fluid(traceSVG: { color: "#F56565" }) {
+              ...GatsbyImageSharpFluid_tracedSVG
+            }
+          }
+        }
+      }
+    }
+  }
+`
+```
+
+Let's now add an image to our `src/content/posts` folder. I've included one in the GitHub repository for this project but you can access a lot of open licence images from places like [https://unsplash.com/](https://unsplash.com/).
+
+Include the location of the image into your blog posts frontmatter.
+
+```jsx
+---
+title: Blog 3
+subtitle: Blogging with MDX and Gatsby
+date: 2020-08-31
+published: true
+featured: true
+cover: './splash.jpg'
+---
+```
+
+Now let's add it to the `blogPost.js` template. You'll need to import the `Img` component from `gatsby-image`.
+
+```jsx
+...
+import Img from 'gatsby-image'
+
+export default ({ data }) => {
+    const { frontmatter, body, timeToRead } = data.mdx
+
+    return (
+        <MDXProvider
+            components={{
+                p: (props) => (
+                    <p {...props} className="text-sm font-light mb-4" />
+                ),
+                h1: (props) => (
+                    <h1 {...props} className="text-2xl font-bold mb-4 mt-10" />
+                ),
+                h2: (props) => (
+                    <h2 {...props} className="text-xl font-bold mb-4 mt-8" />
+                ),
+                h3: (props) => (
+                    <h3 {...props} className="text-lg font-bold mb-4 mt-8" />
+                ),
+                strong: (props) => (
+                    <strong
+                        {...props}
+                        className="font-bold"
+                        style={{ display: 'inline' }}
+                    />
+                ),
+
+                a: (props) => (
+                    <a
+                        {...props}
+                        className="font-bold text-blue-500 hover:underline cursor-pointer"
+                        style={{ display: 'inline' }}
+                    />
+                ),
+                ul: (props) => (
+                    <ul {...props} className="list-disc font-light ml-8 mb-4" />
+                ),
+                blockquote: (props) => (
+                    <div
+                        {...props}
+                        role="alert"
+                        className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 ml-4 mb-4"
+                    />
+                ),
+            }}
+        >
+            <Layout>
+                <section
+                    className="w-2/4 my-8 mx-auto container"
+                    style={{ minHeight: '80vh' }}
+                >
+                    <h1 className="text-3xl sm:text-5xl font-bold">
+                        {frontmatter.title}
+                    </h1>
+                    <div className="flex justify-between">
+                        <p className="text-base text-gray-600">
+                            {frontmatter.date}
+                        </p>
+                        <p className="text-base text-gray-600">
+                            {timeToRead} min read
+                        </p>
+                    </div>
+                    {frontmatter.cover && frontmatter.cover ? (
+                        <div className="my-8 shadow-md">
+                            <Img
+                                style={{ height: '30vh' }}
+                                fluid={frontmatter.cover.childImageSharp.fluid}
+                            />
+                        </div>
+                    ) : null}
+                    <div className="mt-8 text-base font-light">
+                        <MDXRenderer>{body}</MDXRenderer>
+                    </div>
+                </section>
+            </Layout>
+        </MDXProvider>
+    )
+}
+
+...
+```
+
+Your blog post's should now display a cover image on every page.
+
+# Add Google Analytics
+
+This is a great way to monitor traffic to your site and on your blog posts. It also enables to you see where your traffic is coming from. Google Analytics is free up to c. 10 million hits per month per ID. I don't know about you but I'm not expecting that kind of traffic on my site, if you are then you may want to consider looking at the pricing options to avoid your service getting suspended.
+
+First of all you want to sign up and get a Google Analytics account. You can do that with your normal Google account [here](https://analytics.google.com/).
+
+Once you've set up an account, you'll be prompted to create a new property which is equivalent to your new website. You'll need to include your site's name and URL at this point which means you will have had to already deployed your site in part 1 - if you haven't you can follow the steps to do that [here](https://www.danielnorris.co.uk/blog/posts/how-to-build-a-portfolio-using-gatsby/).
+
+Once you have created a new "property" you can access your tracking code by navigating to `Admin > Tracking Info > Tracking Code`. The code will be a number similar to `UA-XXXXXXXXX-X`.
+
+Now that you have your tracking code, let's install the Google Analytics plugin for Gatsby.
+
+```bash
+npm i gatsby-plugin-google-analytics
+```
+
+Now, all you need to do it update your `gatsby-config.js` file.
+
+```jsx
+...
+    {
+            resolve: `gatsby-plugin-google-analytics`,
+            options: {
+            // replace "UA-XXXXXXXXX-X" with your own Tracking ID
+            trackingId: "UA-XXXXXXXXX-X",
+            },
+    },
+...
+```
+
+It can occasionally take a bit of time for statistics on Google Analytics to populate but you should start to see user data shortly after following the instructions above and deploying your site.
+
+# Summary
+
+That's it! 🎉
+
+You should now have a fully functioning portfolio and blog that you have created from scratch using Gatsby, Tailwind CSS and Framer.
+
+The site should be set up a way that enables you to update project work you have created, create a new blog post or update your social media links all from a single `.mdx` or config file. Making the time and effort required for you to now update your portfolio as minimal as possible.
+
+If you've found this series helpful, let me know and connect with me on Twitter at [@danielpnorris](https://twitter.com/danielpnorris) for more content related to technology.
