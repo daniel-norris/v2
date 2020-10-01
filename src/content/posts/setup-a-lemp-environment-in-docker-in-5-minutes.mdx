@@ -3,7 +3,7 @@ title: Setup a LEMP environment in Docker in 5 minutes
 date: 2020-09-27
 published: true
 featured: true
-cover: ./portfolio.jpg
+cover: ./dockerphp.png
 ---
 
 Docker is a tool that I have recently been using at work and it has changed, to such a significant degree, the way in which I approach setting up my development projects that I wanted to take a look at it in more detail for my next article.
@@ -20,7 +20,7 @@ I originally used Vagrant to set up my VM's before moving to Docker. There's not
 **- Speed**
 The difference in speed is noticeable between the two. We're talking the difference between seconds and minutes here. Once you have setup your images and containers the first time round, Docker makes clever use of caching to enable you to tear down all your running Docker containers for a project then re-create all of them in around 1, maybe 2 seconds. I used to go and make myself a coffee when Vagrant would start up.
 
-![docker](./docker.gif)
+![dockergif](./docker.gif)
 
 **-Resource Utilisation**
 The amount of resources Vagrant uses compared to Docker is really noticeable too. Every time I would spin up a new Vagrant VM, the physical space alone would amount to 3-4GB, if not more, per VM. This really starts to add up once you start running multiple projects.
@@ -49,7 +49,7 @@ What this isn't going to cover is how you can go about creating this from scratc
 ## What is Docker?
 Docker is very simply, a tool that manages containers.
 
-Containers are actually a functionality that was already native to Linux. Docker effectively acts like an API for this functionality that is already available in the Linux ecosystem and enable you to encapsulate your code and OS separately. You can have as many containers running simultaneously and side by side without them interferring with each other.
+Containerisation is a functionality that was already native to Linux. Docker effectively acts like an API for this functionality that is already available in the Linux ecosystem and enable you to encapsulate your code and OS separately. You can have as many containers running simultaneously and side by side without them interferring with each other.
 
 This enables you to chop and change your Docker containers for use with different use cases without having to start rebuilding your entire environment from scratch again.
 
@@ -83,11 +83,15 @@ You can find more information on the docs [here](https://docs.docker.com/engine/
 
 Let's start off by cloning the base `Dockerfile` and `docker-compose.yml` files I have already prepared for you.
 
-`git clone git@github.com:daniel-norris/docker-php-setup.git <projectdir>`
+```
+git clone git@github.com:daniel-norris/docker-php-setup.git <projectdir>
+```
 
 Now open your project folder.
 
-`cd <projectdir>`
+```
+cd <projectdir>
+```
 
 If you open `docker/app/Dockerfile` you can take a look at how the image responsible for PHP, Nginx and the Linux OS Ubuntu was created. You'll pull this completed image directly from Docker Hub shortly which will save you time building it and then committing the changes. However, from looking at the `Dockerfile` you can see that it basically consists of a series of commands.
 
@@ -95,7 +99,9 @@ It starts with choosing a base image which it pulls from Docker Hub; in this cas
 
 Go back to root folder of your project and let's make the `develop` file executable.
 
-`chmod +x develop`
+```
+chmod +x develop
+```
 
 If you open the `develop` file, what you'll see is that it's a simple shell script that helps to abstract some of the Docker commands you would need to ordinarily run and helps you make your developer workflow a lot smoother.
 
@@ -115,11 +121,15 @@ environment:
 ### Install Laravel
 We can use the earlier shell script to simplify this process. Run the following, make sure you are in the root directory of your project.
 
-`./develop install`
+```
+./develop install
+```
 
 Then run this to clean up unnecessary folders.
 
-`./develop clean`
+```
+./develop clean
+```
 
 ### Update your `.env` file
 You'll need to now update your `.env` file with the values you originally entered in the `docker-compose.yml` file. Enter them here without the angled brackets.
@@ -143,11 +153,15 @@ MYSQL_PASSWORD: ${DB_PASSWORD}
 
 Now you can start your Docker setup.
 
-`./develop start`
+```
+./develop start
+```
 
 Then migrate your Laravel database migrations.
 
-`./develop migrate`
+```
+./develop migrate
+```
 
 Install npm dependencies and compile.
 
