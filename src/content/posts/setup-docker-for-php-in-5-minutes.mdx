@@ -18,11 +18,11 @@ So why use Docker over some existing tools like Vagrant?
 I originally used Vagrant to set up my VM's before moving to Docker. There's nothing wrong with Vagrant and it solves the "well, it worked on my machine" problem absolutely fine. The difference really becomes apparent when you start looking at the **speed** and **resource utilisation** difference between the two.
 
 **- Speed**
+
 The difference in speed is noticeable between the two. We're talking the difference between seconds and minutes here. Once you have setup your images and containers the first time round, Docker makes clever use of caching to enable you to tear down all your running Docker containers for a project then re-create all of them in around 1, maybe 2 seconds. I used to go and make myself a coffee when Vagrant would start up.
 
-![gif of the command line](./docker.gif)
-
 **-Resource Utilisation**
+
 The amount of resources Vagrant uses compared to Docker is really noticeable too. Every time I would spin up a new Vagrant VM, the physical space alone would amount to 3-4GB, if not more, per VM. This really starts to add up once you start running multiple projects.
 
 ![image comparing normal vm's and docker](./docker-comparison.png)
@@ -40,11 +40,12 @@ Here's what you'll be setting up:
 - Ubuntu 18.04
 - MySQL 5.7
 - PHP 7.2
-- Laravel 7.x (*optional*)
+- Laravel 7.x
 - Node (*optional*)
 - Redis 5.0.x (*optional*)
+- PHPMyAdmin (*optional*)
 
-What this isn't going to cover is how you can go about creating this from scratch yourself, but I will include some pointers on where you can look if you want to omit some of the optional tools above or even change the version of software you are using in your setup.
+What this isn't going to cover is how you can go about creating this from scratch yourself, but I will include some pointers on where you can look if you want to omit some of the optional tools above.
 
 ## What is Docker?
 Docker is very simply, a tool that manages containers.
@@ -119,7 +120,47 @@ environment:
 ```
 
 ### Install Laravel
-We can use the earlier shell script to simplify this process. Run the following, make sure you are in the root directory of your project.
+This is the part of the process where you can choose to omit installing some of the optional tools listed above. If you wanted to setup a slimmmer environment without Redis, Node or the MySQL client PHPMyAdmin then all you would now need to do is delete the following hostnames and their details from the `docker-compose.yml` file:
+
+- PHPMyAdmin
+```
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        ports:
+            - 8090:80
+        environment:
+            - PMA_HOST=db
+        networks:
+            - laravelnet
+```
+
+- Cache
+```
+  cache:
+        image: redis:alpine
+        networks:
+            - laravelnet
+        volumes:
+            - cachedata:/data
+```
+
+- Node
+```
+  node:
+        build:
+            context: ./docker/node
+            dockerfile: Dockerfile
+        image: norrisdan/node:latest
+        networks:
+            - laravelnet
+        volumes:
+            - .:/opt
+        working_dir: /opt
+        command: echo hi
+```
+
+We can now use the earlier shell script to simplify this process. Run the following, make sure you are in the root directory of your project.
 
 ```
 ./develop install
@@ -195,7 +236,6 @@ docker network ls
 ```
 
 ## Summary
-
 That's it! 🎉
 
 Now when you need to start or stop your containers. All you need to do is run either:
