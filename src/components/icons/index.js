@@ -1,6 +1,7 @@
 import React from "react"
 
 import IconMoon from './moon';
+import IconHashnode from './hashnode';
 import IconGithub from './github';
 import IconLinkedin from './linkedin';
 import IconMedium from './medium';
@@ -35,6 +36,8 @@ const Icon = ({ name, color }) => {
     switch (name.toLowerCase()) {
         case "moon":
             return <IconMoon color={color} />
+        case "hashnode":
+            return <IconHashnode color={color} />
         case "github":
             return <IconGithub color={color} />
         case "linkedin":
