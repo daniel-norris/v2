@@ -3,7 +3,6 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import Icon from '../../components/icons/index';
 import Img from "gatsby-image";
 import { motion } from 'framer-motion';
-
 import { github } from '../../config/index';
 
 const Project = ({ content }) => {
@@ -93,7 +92,6 @@ const Project = ({ content }) => {
                 })
             }
         </section >
-
     );
 };
 

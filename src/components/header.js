@@ -1,11 +1,8 @@
 import React from "react"
 import { Link } from "gatsby"
-
 import Logo from "../components/logo"
 import Icon from "../components/icons/index"
-
 import { navLinks } from "../config"
-
 import { motion } from "framer-motion"
 
 const headerVariants = {

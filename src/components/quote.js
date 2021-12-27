@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 const Quote = ({ text, referee, title }) => {
     return (
         <div>

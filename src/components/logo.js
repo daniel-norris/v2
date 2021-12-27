@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
 import { siteShortTitle } from '../config/index';
 
 const headerVariants = {

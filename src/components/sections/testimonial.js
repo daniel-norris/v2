@@ -1,9 +1,7 @@
 import React, { useState } from "react"
 import Icon from "../../components/icons/index"
 import { motion } from "framer-motion"
-
 import { Link } from "gatsby"
-
 import { testimonials, socialMedia } from "../../config/index"
 
 const Testimonial = () => {

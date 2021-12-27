@@ -1,5 +1,6 @@
 const { createFilePath } = require(`gatsby-source-filesystem`)
 const path = require(`path`)
+
 exports.createPages = ({ actions, graphql }) => {
     const { createPage } = actions
     const blogPostTemplate = path.resolve(
@@ -35,6 +36,7 @@ exports.createPages = ({ actions, graphql }) => {
         })
     })
 }
+
 exports.onCreateNode = ({ node, actions, getNode }) => {
 
     const { createNodeField } = actions

@@ -3,7 +3,6 @@ import { graphql, Link } from 'gatsby';
 import Layout from '../components/layout';
 import FeaturedPosts from '../components/sections/featuredPosts';
 import Posts from '../components/sections/posts';
-
 import { motion } from 'framer-motion';
 
 const Blog = ({ data }) => {
@@ -20,7 +19,6 @@ const Blog = ({ data }) => {
     }
 
     return (
-
         <Layout>
             <motion.section className="mt-6 flex flex-col justify-center" style={{ minHeight: "60vh" }}
                 variants={blogVariants}
@@ -40,41 +38,38 @@ export default Blog;
 
 export const query = graphql`
 {
-    featured: allMdx(filter: {fileAbsolutePath: {regex: "/posts/"}, frontmatter: {published: {eq: true}, featured: {eq: true}}}, sort: {order: DESC, fields: frontmatter___date}) {
-        edges {
-          node {
-            fields {
-              slug
-            }
-            frontmatter {
-              date(formatString: "Do MMM")
-              title
-            }
-            excerpt(pruneLength: 100)
-            id
-            body
-            timeToRead
-          }
+  featured: allMdx(filter: {fileAbsolutePath: {regex: "/posts/"}, frontmatter: {published: {eq: true}, featured: {eq: true}}}, sort: {order: DESC, fields: frontmatter___date}) {
+    edges {
+      node {
+        fields {
+          slug
         }
+        frontmatter {
+          date(formatString: "Do MMM")
+          title
+        }
+        excerpt(pruneLength: 100)
+        id
+        body
+        timeToRead
       }
-
-       posts: allMdx(filter: {fileAbsolutePath: {regex: "/posts/"}, frontmatter: {published: {eq: true}}}, sort: {order: DESC, fields: frontmatter___date}) {
-          edges {
-            node {
-              fields {
-                slug
-              }
-              body
-              timeToRead
-              frontmatter {
-                title
-                date(formatString: "Do MMM")
-              }
-              id
-              excerpt(pruneLength: 100)
-            }
-          }
+    }
+  }
+  posts: allMdx(filter: {fileAbsolutePath: {regex: "/posts/"}, frontmatter: {published: {eq: true}}}, sort: {order: DESC, fields: frontmatter___date}) {
+    edges {
+      node {
+        fields {
+          slug
         }
-
-
+        body
+        timeToRead
+        frontmatter {
+          title
+          date(formatString: "Do MMM")
+        }
+        id
+        excerpt(pruneLength: 100)
+      }
+    }
+  }
 }`

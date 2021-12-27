@@ -1,16 +1,12 @@
 import React from 'react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { Link } from 'gatsby';
-
 import { navLinks } from '../../config/index';
-
 import { motion } from 'framer-motion';
 
 const Hero = ({ content }) => {
-
     const { frontmatter, body } = content[0].node;
     const { button } = navLinks;
-
     const variants = {
         hidden: {
             opacity: 0,
@@ -24,6 +20,7 @@ const Hero = ({ content }) => {
 
     return (
         <section class="flex flex-col justify-center" style={{ height: "100vh" }}>
+
             <motion.p className="uppercase font-bold text-lg text-blue-500"
                 variants={variants}
                 initial="hidden"
@@ -31,6 +28,7 @@ const Hero = ({ content }) => {
                 transition={{ delay: 0.6 }}>
                 {frontmatter.intro}
             </motion.p>
+
             <motion.h1 className="font-bold text-6xl"
                 variants={variants}
                 initial="hidden"
@@ -38,6 +36,7 @@ const Hero = ({ content }) => {
                 transition={{ delay: 0.8 }}>
                 {frontmatter.title}
             </motion.h1>
+
             <motion.div className="font-light text-2xl sm:w-4/5"
                 variants={variants}
                 initial="hidden"
@@ -55,9 +54,8 @@ const Hero = ({ content }) => {
                     {button.name}
                 </motion.button>
             </Link>
-
+            
         </section>
-
     );
 };
 
