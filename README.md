@@ -1,5 +1,7 @@
 # v2 Personal Portfolio
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/edaaea15-9a19-4626-88ef-849abfb69521/deploy-status)](https://app.netlify.com/sites/gallant-knuth-b47ccc/deploys)
+
 This portfolio was originally built immediately after I completed a bootcamp in Aug, 2020. It's had few improvements since then simply due to my focus turned to improving other skills, completing my AWS certifications and other time constraints with work. It's built using Gatsby, GraphQL, React, Framer Motion and Tailwind CSS. 
 
 I've written a two-part blog about how I built this which is available on my portfolio or on [Dev.to](https://dev.to/danielnorris/how-to-build-a-portfolio-using-gatsby-part-1-1kma).
