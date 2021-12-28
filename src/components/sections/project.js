@@ -8,7 +8,7 @@ import { github } from '../../config/index';
 const Project = ({ content }) => {
 
     // const sectionDetails = content[3].node;
-    const projects = content.slice(1, content.length);
+    const projects = content.slice(0, content.length);
 
     return (
         <section id="project" className="mt-6 flex flex-col mb-8">
@@ -22,6 +22,7 @@ const Project = ({ content }) => {
                         </div>
                     </div>
                 </a>
+                <p className='mt-6 mb-10 font-light text-base'>It's worthwhile noting featured projects listed here were originally built either during or immediately after the bootcamp I completed in Aug, 2020. They're kept here for posterity sake.</p>
             </div >
 
             {
@@ -62,7 +63,7 @@ const Project = ({ content }) => {
                                                         href={frontmatter.npm} className="w-8 h-8 mr-4">
                                                         <Icon name="npm" color="gray" />
                                                     </motion.a>
-                                                    : null}
+                                                : null}
                                                 <motion.a
                                                     whileHover={{ scale: 1.1 }}
                                                     whileTap={{ scale: 0.9 }}
@@ -70,13 +71,15 @@ const Project = ({ content }) => {
                                                     className="w-8 h-8 mr-4">
                                                     <Icon name="github" color="gray" />
                                                 </motion.a>
-                                                <motion.a
-                                                    whileHover={{ scale: 1.1 }}
-                                                    whileTap={{ scale: 0.9 }}
-                                                    href={frontmatter.external}
-                                                    className="w-8 h-8">
-                                                    <Icon name="external" color="gray" />
-                                                </motion.a>
+                                                {frontmatter.external ?
+                                                    <motion.a
+                                                        whileHover={{ scale: 1.1 }}
+                                                        whileTap={{ scale: 0.9 }}
+                                                        href={frontmatter.external}
+                                                        className="w-8 h-8">
+                                                        <Icon name="external" color="gray" />
+                                                    </motion.a>
+                                                : null }
                                             </div>
                                         </div>
                                     </div>

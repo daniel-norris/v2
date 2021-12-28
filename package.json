@@ -3,7 +3,7 @@
   "private": true,
   "author": "Dan Norris",
   "description": "v2 personal portfolio",
-  "version": "2.0",
+  "version": "2.0.0",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop -H 0.0.0.0",
@@ -38,7 +38,7 @@
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0",
     "react-live": "^2.2.2",
-    "webpack": "^5.65.0"
+    "webpack": "^4.46.0"
   },
   "devDependencies": {
     "prettier": "2.0.5",

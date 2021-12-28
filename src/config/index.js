@@ -3,7 +3,7 @@ module.exports = {
     siteTitle: "Personal Portfolio",
     siteShortTitle: "DN",
     siteDescription:
-        "v2 personal portfolio. Dan is based in Bristol, UK and a Software Engineer for LexisNexis",
+        "Dan Norris Portfolio",
     siteUrl: "https://www.danielnorris.co.uk",
     siteLanguage: "en_UK",
     siteIcon: "",
@@ -74,13 +74,13 @@ module.exports = {
             name: "php",
         },
         {
-            name: "gulp",
-        },
-        {
             name: "jest",
         },
         {
             name: "linux",
+        },
+        {
+            name: "docker",
         },
         {
             name: "aws",
@@ -110,7 +110,7 @@ module.exports = {
             },
         ],
         button: {
-            name: "Say Hello",
+            name: "Say hello",
             url: "/#contact",
         },
     },
@@ -134,11 +134,6 @@ module.exports = {
             quote: "would recommend and work with Dan again.",
             referee: "Michael Jeffrey",
             title: "Senior Software Engineer",
-        },
-        {
-            quote: "[his] programming skills were never in doubt.",
-            referee: "Richard Stibbard",
-            title: "Founder",
         },
     ],
 }
