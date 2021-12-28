@@ -25,6 +25,7 @@ import IconRedux from './tech/redux';
 import IconSass from './tech/sass';
 import IconTailwind from './tech/tailwind';
 import IconVue from './tech/vue';
+import IconDocker from './tech/docker';
 
 import IconArrowLeft from './arrow-left';
 import IconArrowRight from './arrow-right';
@@ -70,6 +71,8 @@ const Icon = ({ name, color }) => {
             return <IconNode color={color} />
         case "php":
             return <IconPhp color={color} />
+        case "docker":
+            return <IconDocker color={color} />
         case "react":
             return <IconReact color={color} />
         case "redux":

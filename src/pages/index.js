@@ -1,6 +1,5 @@
 import React from "react"
 import { graphql } from 'gatsby';
-
 import Layout from '../components/layout';
 import Hero from '../components/sections/hero';
 import About from '../components/sections/about';
@@ -9,9 +8,7 @@ import Testimonial from "../components/sections/testimonial";
 import Project from "../components/sections/project";
 import FeaturedPosts from "../components/sections/featuredPosts";
 import Contact from '../components/sections/contact';
-
 import SEO from '../components/seo';
-
 
 const Home = ({ data }) => {
     return (

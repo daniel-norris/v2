@@ -3,7 +3,6 @@ import React from 'react';
 import Code from './src/components/code';
 
 const components = {
-
     pre: ({ children: { props } }) => {
         if (props.mdxType === 'code') {
             return (

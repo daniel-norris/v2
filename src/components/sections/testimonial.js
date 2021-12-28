@@ -1,9 +1,7 @@
 import React, { useState } from "react"
 import Icon from "../../components/icons/index"
 import { motion } from "framer-motion"
-
 import { Link } from "gatsby"
-
 import { testimonials, socialMedia } from "../../config/index"
 
 const Testimonial = () => {
@@ -55,7 +53,7 @@ const Testimonial = () => {
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          onClick={() => setCurrent(current < 4 ? current + 1 : current)}
+          onClick={() => setCurrent(current < 3 ? current + 1 : current)}
         >
           <Icon name="arrow-right" color="#4299e1" />
         </motion.button>
