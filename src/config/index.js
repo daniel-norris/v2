@@ -47,6 +47,9 @@ module.exports = {
             name: "javascript",
         },
         {
+            name: "typescript",
+        },
+        {
             name: "sass",
         },
         {

@@ -26,6 +26,7 @@ import IconSass from './tech/sass';
 import IconTailwind from './tech/tailwind';
 import IconVue from './tech/vue';
 import IconDocker from './tech/docker';
+import IconTypeScript from './tech/typescript';
 
 import IconArrowLeft from './arrow-left';
 import IconArrowRight from './arrow-right';
@@ -61,6 +62,8 @@ const Icon = ({ name, color }) => {
             return <IconHtml5 color={color} />
         case "javascript":
             return <IconJavascript color={color} />
+        case "typescript":
+            return <IconTypeScript color={color} />
         case "jest":
             return <IconJest color={color} />
         case "laravel":
