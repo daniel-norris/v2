@@ -19,7 +19,7 @@ const Home = ({ data }) => {
             <Technology content={data.technology.edges} />
             <Testimonial />
             <Project content={data.project.edges} />
-            <FeaturedPosts content={data.featured.edges} />
+            {/* <FeaturedPosts content={data.featured.edges} /> */}
             <Contact content={data.contact.edges} />
         </Layout>
     );

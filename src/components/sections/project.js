@@ -42,19 +42,13 @@ const Project = ({ content }) => {
 
                             </div>
 
+                           
                             <div className={`py-8 flex-col flex ${frontmatter.position % 2 !== 0 ? "sm:flex sm:flex-row" : "sm:flex sm:flex-row-reverse"}`} key={frontmatter.position}>
 
                                 <div className="order-3 sm:order-none flex flex-col sm:w-1/3">
                                     <div className="font-light text-base sm:text-lg flex justify-between">
                                         <div>
                                             <MDXRenderer>{body}</MDXRenderer>
-                                            <div className="flex sm:justify-start justify-end text-sm font-bold text-blue-500">
-                                                {frontmatter.tags.map((tag, key) => {
-                                                    return (
-                                                        <p className="px-1 mt-4 sm:mt-6">{tag}</p>
-                                                    )
-                                                })}
-                                            </div>
                                             <div className={`px-1 justify-end ${frontmatter.position % 2 !== 0 ? "sm:justify-start" : "sm:justify-end"} flex mt-4`}>
                                                 {frontmatter.npm ?
                                                     <motion.a
@@ -88,6 +82,15 @@ const Project = ({ content }) => {
                                     <Img
                                         fluid={frontmatter.screenshot.childImageSharp.fluid}
                                     />
+                                     <div className="p-4 text-sm font-bold text-blue-500">
+                                        <ul className='grid grid-cols-2 px-12'>
+                                            {frontmatter.tags.map((tag, key) => {
+                                                return (
+                                                    <li className='list-disc'>{tag}</li>
+                                                )
+                                            })}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div >
                         </>

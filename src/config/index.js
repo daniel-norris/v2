@@ -11,29 +11,29 @@ module.exports = {
 
     socialMedia: [
         {
-            name: "Twitter",
-            url: "https://twitter.com/danielpnorris",
-        },
-        {
             name: "LinkedIn",
             url: "https://www.linkedin.com/in/danielpnorris/",
-        },
-        {
-            name: "Medium",
-            url: "https://medium.com/@dan.norris",
         },
         {
             name: "GitHub",
             url: "https://github.com/daniel-norris",
         },
-        {
-            name: "Dev",
-            url: "https://dev.to/danielnorris",
-        },
-        {
-            name: "Hashnode",
-            url: "https://dan.hashnode.dev/",
-        },
+        // {
+        //     name: "Twitter",
+        //     url: "https://twitter.com/danielpnorris",
+        // },
+        // {
+        //     name: "Medium",
+        //     url: "https://medium.com/@dan.norris",
+        // },
+        // {
+        //     name: "Dev",
+        //     url: "https://dev.to/danielnorris",
+        // },
+        // {
+        //     name: "Hashnode",
+        //     url: "https://dan.hashnode.dev/",
+        // },
     ],
 
     technology: [
@@ -96,17 +96,17 @@ module.exports = {
                 url: "/#about",
             },
             {
-                name: "Work",
+                name: "Projects",
                 url: "/#project",
             },
             {
                 name: "Testimonials",
                 url: "/#testimonial",
             },
-            {
-                name: "Blog",
-                url: "/#blog",
-            },
+            // {
+            //     name: "Blog",
+            //     url: "/#blog",
+            // },
             {
                 name: "Contact",
                 url: "/#contact",

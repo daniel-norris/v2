@@ -12,7 +12,7 @@ const Footer = () => {
             <Link to="/" aria-label="home">
                 <Logo />
             </Link>
-            <div className="flex sm:w-1/4 sm:justify-between">
+            <div className="flex sm:w-1/4 space-x-6">
                 {socialMedia.map(({ name, url }, key) => {
                     return (
                         <motion.a

@@ -20,7 +20,10 @@ const Blog = ({ data }) => {
 
     return (
         <Layout>
-            <motion.section className="mt-6 flex flex-col justify-center" style={{ minHeight: "60vh" }}
+            <div>
+                Not found.
+            </div>
+            {/* <motion.section className="mt-6 flex flex-col justify-center" style={{ minHeight: "60vh" }}
                 variants={blogVariants}
                 initial="hidden"
                 animate="display"
@@ -29,7 +32,7 @@ const Blog = ({ data }) => {
                 <p className="font-light text-base sm:text-lg">I've just started blogging again but I'm aiming to make this a more regular occurence. I'll be blogging about my journey as a Junior Developer and web development, in particular about <a className="text-blue-500 font-bold hover:underline" href="https://laravel.com/">Laravel</a>, <a className="text-blue-500 font-bold hover:underline" href="https://vuejs.org/">Vue</a> and <a className="text-blue-500 font-bold hover:underline" href="https://reactjs.org/">React</a>. </p>
             </motion.section>
             <FeaturedPosts cta={false} content={data.featured.edges} />
-            <Posts content={data.posts.edges} />
+            <Posts content={data.posts.edges} /> */}
         </Layout>
     );
 };

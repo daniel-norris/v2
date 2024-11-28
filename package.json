@@ -33,13 +33,14 @@
     "gatsby-remark-images": "^3.3.25",
     "gatsby-source-filesystem": "^2.3.24",
     "gatsby-transformer-sharp": "^2.5.13",
+    "mozjpeg": "^7.0.0",
     "prism-react-renderer": "^1.1.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0",
+    "react-icons": "^5.3.0",
     "react-live": "^2.2.2",
-    "webpack": "^4.46.0",
-    "mozjpeg": "^7.0.0"
+    "webpack": "^4.46.0"
   },
   "devDependencies": {
     "prettier": "2.0.5",
